@@ -1,0 +1,81 @@
+<mat-accordion class="app-nav-accordion">
+  <mat-nav-list>
+    <mat-list-item [routerLink]="['/home1']" [routerLinkActive]="['active']">
+      <mat-icon [class.active]="selected" matListIcon><nb-icon icon="home"></nb-icon></mat-icon>
+      <a matLine>Home</a>
+    </mat-list-item>
+  </mat-nav-list>
+  <mat-expansion-panel class="mat-elevation-z0">
+    <mat-expansion-panel-header>
+      <mat-list-item>
+        <mat-panel-title>
+          <mat-icon matListIcon><nb-icon icon="layers"></nb-icon></mat-icon>
+          <span>Entities </span>
+        </mat-panel-title>
+      </mat-list-item>
+        
+    </mat-expansion-panel-header>
+    <mat-nav-list>
+        <a mat-list-item>Department</a>
+        <a mat-list-item>Employee</a>
+        <a mat-list-item>Person</a>
+        <a mat-list-item>Job</a>
+        <a mat-list-item>Job History</a>
+        <a mat-list-item>Projects</a>
+        <a mat-list-item>Assignments</a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="mat-elevation-z0">
+    <mat-expansion-panel-header>
+      <mat-list-item>
+        <mat-panel-title>
+          <mat-icon matListIcon><nb-icon icon="people"></nb-icon></mat-icon>
+          <span>Administration</span>
+        </mat-panel-title>
+      </mat-list-item>
+        
+    </mat-expansion-panel-header>
+    <mat-nav-list>
+        <a mat-list-item>User Management</a>
+        <a mat-list-item>Metrics</a>
+        <a mat-list-item>Health</a>
+        <a mat-list-item>Configuration</a>
+        <a mat-list-item>Logs</a>
+        <a mat-list-item>API</a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="mat-elevation-z0">
+    <mat-expansion-panel-header>
+      <mat-list-item>
+        <mat-panel-title>
+          <mat-icon matListIcon><nb-icon icon="globe-2"></nb-icon></mat-icon>
+          <span>Language</span>
+        </mat-panel-title>
+      </mat-list-item>
+        
+    </mat-expansion-panel-header>
+    <mat-nav-list>
+        <a mat-list-item>English</a>
+        <a mat-list-item>VietNam</a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="mat-elevation-z0">
+    <mat-expansion-panel-header>
+      <mat-list-item>
+        <mat-panel-title>
+          <mat-icon matListIcon><nb-icon icon="settings-2"></nb-icon></mat-icon>
+          <span>Account</span>
+        </mat-panel-title>
+      </mat-list-item>
+        
+    </mat-expansion-panel-header>
+    <mat-nav-list>
+        <a mat-list-item>Settings</a>
+        <a mat-list-item>Password</a>
+        <a mat-list-item>Sign out</a>
+    </mat-nav-list>
+  </mat-expansion-panel>
+</mat-accordion>

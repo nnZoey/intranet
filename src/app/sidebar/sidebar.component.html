@@ -1,0 +1,37 @@
+<nb-layout>
+    <nb-layout-header clipped>
+
+      <button nbButton ghost status="basic" size="large" (click)="toggle()"><nb-icon icon="menu-2-outline" status="basic"></nb-icon></button>
+      <a class="navbar-brand logo" routerLink="/" >
+        <span class="logo-img"></span>
+        <span class="navbar-title">Intranet</span>
+        <span class="navbar-version">v0.0.1</span>
+      </a>
+      <nb-search shape="round" type="rotate-layout">Search employee</nb-search>
+    </nb-layout-header>
+  
+    <nb-sidebar class = "sidebar-color" tag="left" start responsive autosize>
+      <div class="main-content">
+        <nb-card class="nbCard">
+          <button nbButton status="primary" shape="semi-round"  size="medium"><nb-icon icon="plus"></nb-icon>Add new employee</button>
+ 
+        </nb-card>
+        <app-menu-list-item></app-menu-list-item>
+      </div>
+      
+      
+    </nb-sidebar>  
+    <nb-layout-column class="colored-column-basic">
+      <nb-card accent="info">
+        <nb-card-header>
+          You search for:
+        </nb-card-header>
+        <nb-card-body>
+          <h3>
+            {{value || 'Search...' }}
+          </h3>
+        </nb-card-body>
+      </nb-card>
+    </nb-layout-column>
+</nb-layout>
+

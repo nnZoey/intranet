@@ -1,0 +1,49 @@
+:host nb-layout-header button:last-child {
+    margin-right:auto;
+}
+
+.sidebar-color {
+    background-color: #1b2b55;
+}
+
+.navbar-version {
+    font-family: Roboto;
+    margin-right: 1rem;
+}
+
+nb-sidebar,
+.main-content {
+
+}
+
+.nbCard {
+    margin-top: 30px;
+    width: 100%;
+    background-color: #1b2b55;
+    border: none;
+}
+
+[nbButton] {
+    color: #ffffff;
+}
+h3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+  
+.control-panel {
+}
+
+app-menu-list-item{
+    transition: width 0s;
+}
+
+.logo-img {
+    height: 45px;
+    width: 45px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url('../../assets/images/logo-leap.jpg') no-repeat center center;
+    background-size: contain;
+  }
+  

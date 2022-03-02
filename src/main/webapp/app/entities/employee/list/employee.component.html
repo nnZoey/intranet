@@ -1,0 +1,140 @@
+<div>
+  <h2 id="page-heading" data-cy="EmployeeHeading">
+    <span jhiTranslate="intranetApp.employee.home.title">Employees</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="intranetApp.employee.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-employee"
+        [routerLink]="['/employee/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="intranetApp.employee.home.createLabel"> Create a new Employee </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employees?.length === 0">
+    <span jhiTranslate="intranetApp.employee.home.notFound">No employees found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="employees && employees.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span jhiTranslate="intranetApp.employee.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="effectiveDate">
+            <span jhiTranslate="intranetApp.employee.effectiveDate">Effective Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="employeeCode">
+            <span jhiTranslate="intranetApp.employee.employeeCode">Employee Code</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="professionalEmail">
+            <span jhiTranslate="intranetApp.employee.professionalEmail">Professional Email</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="professionalPhoneNumber">
+            <span jhiTranslate="intranetApp.employee.professionalPhoneNumber">Professional Phone Number</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="salary">
+            <span jhiTranslate="intranetApp.employee.salary">Salary</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="commissionPct">
+            <span jhiTranslate="intranetApp.employee.commissionPct">Commission Pct</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="contractNumber">
+            <span jhiTranslate="intranetApp.employee.contractNumber">Contract Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="contractStartDate">
+            <span jhiTranslate="intranetApp.employee.contractStartDate">Contract Start Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="contractEndDate">
+            <span jhiTranslate="intranetApp.employee.contractEndDate">Contract End Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="contractType">
+            <span jhiTranslate="intranetApp.employee.contractType">Contract Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="supervisor.id">
+            <span jhiTranslate="intranetApp.employee.supervisor">Supervisor</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" jhiSortBy="job.id"><span jhiTranslate="intranetApp.employee.job">Job</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="department.id">
+            <span jhiTranslate="intranetApp.employee.department">Department</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let employee of employees; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee', employee.id, 'view']">{{ employee.id }}</a>
+          </td>
+          <td>{{ employee.effectiveDate | formatMediumDatetime }}</td>
+          <td>{{ employee.employeeCode }}</td>
+          <td>{{ employee.professionalEmail }}</td>
+          <td>{{ employee.professionalPhoneNumber }}</td>
+          <td>{{ employee.salary }}</td>
+          <td>{{ employee.commissionPct }}</td>
+          <td>{{ employee.contractNumber }}</td>
+          <td>{{ employee.contractStartDate | formatMediumDatetime }}</td>
+          <td>{{ employee.contractEndDate | formatMediumDatetime }}</td>
+          <td>{{ employee.contractType }}</td>
+          <td>
+            <div *ngIf="employee.supervisor">
+              <a [routerLink]="['/employee', employee.supervisor?.id, 'view']">{{ employee.supervisor?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.job">
+              <a [routerLink]="['/job', employee.job?.id, 'view']">{{ employee.job?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.department">
+              <a [routerLink]="['/department', employee.department?.id, 'view']">{{ employee.department?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/employee', employee.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/employee', employee.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(employee)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

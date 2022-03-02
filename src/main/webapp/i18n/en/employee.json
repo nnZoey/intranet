@@ -1,0 +1,40 @@
+{
+  "intranetApp": {
+    "employee": {
+      "home": {
+        "title": "Employees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "",
+        "createOrEditLabel": "Create or edit a Employee",
+        "notFound": "No Employees found"
+      },
+      "created": "A new Employee is created with identifier {{ param }}",
+      "updated": "A Employee is updated with identifier {{ param }}",
+      "deleted": "A Employee is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Employee {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee"
+      },
+      "id": "Id",
+      "effectiveDate": "Effective Date",
+      "employeeCode": "Employee Code",
+      "professionalEmail": "Professional Email",
+      "professionalPhoneNumber": "Professional Phone Number",
+      "salary": "Salary",
+      "commissionPct": "Commission Pct",
+      "contractNumber": "Contract Number",
+      "contractStartDate": "Contract Start Date",
+      "contractEndDate": "Contract End Date",
+      "contractType": "Contract Type",
+      "assignment": "Assignment",
+      "jobHistory": "Job History",
+      "supervisor": "Supervisor",
+      "job": "Job",
+      "department": "Department",
+      "teamMembers": "Team Members",
+      "teamMembersInHistory": "Team Members In History"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-bank-account-heading"
+        data-cy="BankAccountCreateUpdateHeading"
+        jhiTranslate="intranetApp.bankAccount.home.createOrEditLabel"
+      >
+        Create or edit a Bank Account
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="intranetApp.bankAccount.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.bankAccount.bankAccount" for="field_bankAccount">Bank Account</label>
+          <input
+            type="text"
+            class="form-control"
+            name="bankAccount"
+            id="field_bankAccount"
+            data-cy="bankAccount"
+            formControlName="bankAccount"
+          />
+          <div *ngIf="editForm.get('bankAccount')!.invalid && (editForm.get('bankAccount')!.dirty || editForm.get('bankAccount')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bankAccount')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.bankAccount.bankCode" for="field_bankCode">Bank Code</label>
+          <input type="text" class="form-control" name="bankCode" id="field_bankCode" data-cy="bankCode" formControlName="bankCode" />
+          <div *ngIf="editForm.get('bankCode')!.invalid && (editForm.get('bankCode')!.dirty || editForm.get('bankCode')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bankCode')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.bankAccount.employeeAccount" for="field_employeeAccount"
+            >Employee Account</label
+          >
+          <select
+            class="form-control"
+            id="field_employeeAccount"
+            data-cy="employeeAccount"
+            name="employeeAccount"
+            formControlName="employeeAccount"
+          >
+            <option *ngIf="editForm.get(['employeeAccount'])!.value == null" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="
+                employeeOption.id === editForm.get('employeeAccount')!.value?.id ? editForm.get('employeeAccount')!.value : employeeOption
+              "
+              *ngFor="let employeeOption of employeeAccountsCollection; trackBy: trackEmployeeById"
+            >
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['employeeAccount'])!.invalid &&
+            (editForm.get(['employeeAccount'])!.dirty || editForm.get(['employeeAccount'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['employeeAccount'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

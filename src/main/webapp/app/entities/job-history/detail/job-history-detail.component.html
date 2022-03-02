@@ -1,0 +1,78 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="jobHistory">
+      <h2 data-cy="jobHistoryDetailsHeading"><span jhiTranslate="intranetApp.jobHistory.detail.title">Job History</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="intranetApp.jobHistory.id">Id</span></dt>
+        <dd>
+          <span>{{ jobHistory.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.employeeCode">Employee Code</span></dt>
+        <dd>
+          <span>{{ jobHistory.employeeCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.effectiveDate">Effective Date</span></dt>
+        <dd>
+          <span>{{ jobHistory.effectiveDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.salary">Salary</span></dt>
+        <dd>
+          <span>{{ jobHistory.salary }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.commissionPct">Commission Pct</span></dt>
+        <dd>
+          <span>{{ jobHistory.commissionPct }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.contractNumber">Contract Number</span></dt>
+        <dd>
+          <span>{{ jobHistory.contractNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.contractStartDate">Contract Start Date</span></dt>
+        <dd>
+          <span>{{ jobHistory.contractStartDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.contractEndDate">Contract End Date</span></dt>
+        <dd>
+          <span>{{ jobHistory.contractEndDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.contractType">Contract Type</span></dt>
+        <dd>
+          <span>{{ jobHistory.contractType }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.supervisor">Supervisor</span></dt>
+        <dd>
+          <div *ngIf="jobHistory.supervisor">
+            <a [routerLink]="['/employee', jobHistory.supervisor?.id, 'view']">{{ jobHistory.supervisor?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.job">Job</span></dt>
+        <dd>
+          <div *ngIf="jobHistory.job">
+            <a [routerLink]="['/job', jobHistory.job?.id, 'view']">{{ jobHistory.job?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.jobHistory.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="jobHistory.employee">
+            <a [routerLink]="['/employee', jobHistory.employee?.id, 'view']">{{ jobHistory.employee?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/job-history', jobHistory.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

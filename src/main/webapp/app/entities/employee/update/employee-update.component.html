@@ -1,0 +1,706 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-employee-heading" data-cy="EmployeeCreateUpdateHeading" jhiTranslate="intranetApp.employee.home.createOrEditLabel">
+        Create or edit a Employee
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.effectiveDate" for="field_effectiveDate"
+            >Effective Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_effectiveDate"
+              data-cy="effectiveDate"
+              type="datetime-local"
+              class="form-control"
+              name="effectiveDate"
+              formControlName="effectiveDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('effectiveDate')!.invalid && (editForm.get('effectiveDate')!.dirty || editForm.get('effectiveDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('effectiveDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('effectiveDate')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.employeeCode" for="field_employeeCode">Employee Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="employeeCode"
+            id="field_employeeCode"
+            data-cy="employeeCode"
+            formControlName="employeeCode"
+          />
+          <div
+            *ngIf="editForm.get('employeeCode')!.invalid && (editForm.get('employeeCode')!.dirty || editForm.get('employeeCode')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('employeeCode')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.professionalEmail" for="field_professionalEmail"
+            >Professional Email</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="professionalEmail"
+            id="field_professionalEmail"
+            data-cy="professionalEmail"
+            formControlName="professionalEmail"
+          />
+          <div
+            *ngIf="
+              editForm.get('professionalEmail')!.invalid &&
+              (editForm.get('professionalEmail')!.dirty || editForm.get('professionalEmail')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('professionalEmail')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.professionalPhoneNumber" for="field_professionalPhoneNumber"
+            >Professional Phone Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="professionalPhoneNumber"
+            id="field_professionalPhoneNumber"
+            data-cy="professionalPhoneNumber"
+            formControlName="professionalPhoneNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('professionalPhoneNumber')!.invalid &&
+              (editForm.get('professionalPhoneNumber')!.dirty || editForm.get('professionalPhoneNumber')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('professionalPhoneNumber')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.salary" for="field_salary">Salary</label>
+          <input type="number" class="form-control" name="salary" id="field_salary" data-cy="salary" formControlName="salary" />
+          <div *ngIf="editForm.get('salary')!.invalid && (editForm.get('salary')!.dirty || editForm.get('salary')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('salary')?.errors?.required" jhiTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('salary')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1000000 }"
+            >
+              This field should be at least 1000000.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('salary')?.errors?.number" jhiTranslate="entity.validation.number">
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.commissionPct" for="field_commissionPct"
+            >Commission Pct</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="commissionPct"
+            id="field_commissionPct"
+            data-cy="commissionPct"
+            formControlName="commissionPct"
+          />
+          <div
+            *ngIf="
+              editForm.get('commissionPct')!.invalid && (editForm.get('commissionPct')!.dirty || editForm.get('commissionPct')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('commissionPct')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('commissionPct')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              This field should be at least 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('commissionPct')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 100 }"
+            >
+              This field cannot be more than 100.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('commissionPct')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.contractNumber" for="field_contractNumber"
+            >Contract Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="contractNumber"
+            id="field_contractNumber"
+            data-cy="contractNumber"
+            formControlName="contractNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('contractNumber')!.invalid && (editForm.get('contractNumber')!.dirty || editForm.get('contractNumber')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('contractNumber')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.contractStartDate" for="field_contractStartDate"
+            >Contract Start Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_contractStartDate"
+              data-cy="contractStartDate"
+              type="datetime-local"
+              class="form-control"
+              name="contractStartDate"
+              formControlName="contractStartDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('contractStartDate')!.invalid &&
+              (editForm.get('contractStartDate')!.dirty || editForm.get('contractStartDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('contractStartDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('contractStartDate')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.contractEndDate" for="field_contractEndDate"
+            >Contract End Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_contractEndDate"
+              data-cy="contractEndDate"
+              type="datetime-local"
+              class="form-control"
+              name="contractEndDate"
+              formControlName="contractEndDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('contractEndDate')!.invalid &&
+              (editForm.get('contractEndDate')!.dirty || editForm.get('contractEndDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('contractEndDate')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('contractEndDate')?.errors?.ZonedDateTimelocal"
+              jhiTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.contractType" for="field_contractType">Contract Type</label>
+          <input
+            type="text"
+            class="form-control"
+            name="contractType"
+            id="field_contractType"
+            data-cy="contractType"
+            formControlName="contractType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.supervisor" for="field_supervisor">Supervisor</label>
+          <select class="form-control" id="field_supervisor" data-cy="supervisor" name="supervisor" formControlName="supervisor">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="employeeOption.id === editForm.get('supervisor')!.value?.id ? editForm.get('supervisor')!.value : employeeOption"
+              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+            >
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.job" for="field_job">Job</label>
+          <select class="form-control" id="field_job" data-cy="job" name="job" formControlName="job">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="jobOption.id === editForm.get('job')!.value?.id ? editForm.get('job')!.value : jobOption"
+              *ngFor="let jobOption of jobsSharedCollection; trackBy: trackJobById"
+            >
+              {{ jobOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" jhiTranslate="intranetApp.employee.department" for="field_department">Department</label>
+          <select class="form-control" id="field_department" data-cy="department" name="department" formControlName="department">
+            <option *ngIf="!editForm.get('department')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="
+                departmentOption.id === editForm.get('department')!.value?.id ? editForm.get('department')!.value : departmentOption
+              "
+              *ngFor="let departmentOption of departmentsSharedCollection; trackBy: trackDepartmentById"
+            >
+              {{ departmentOption.id }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['department'])!.invalid && (editForm.get(['department'])!.dirty || editForm.get(['department'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['department'])?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.id" for="field_id">Id</label>
+        <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.firstName" for="field_firstName">First Name</label>
+        <input type="text" class="form-control" name="firstName" id="field_firstName" data-cy="firstName" formControlName="firstName" />
+        <div *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('firstName')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.lastName" for="field_lastName">Last Name</label>
+        <input type="text" class="form-control" name="lastName" id="field_lastName" data-cy="lastName" formControlName="lastName" />
+        <div *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('lastName')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.sex" for="field_sex">Sex</label>
+        <select class="form-control" name="sex" formControlName="sex" id="field_sex" data-cy="sex">
+          <option [ngValue]="null">{{ 'intranetApp.Sex.null' | translate }}</option>
+          <option *ngFor="let sex of sexValues" [value]="sex">{{ 'intranetApp.Sex.' + sex | translate }}</option>
+        </select>
+        <div *ngIf="editForm.get('sex')!.invalid && (editForm.get('sex')!.dirty || editForm.get('sex')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('sex')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.dob" for="field_dob">Dob</label>
+        <div class="d-flex">
+          <input
+            id="field_dob"
+            data-cy="dob"
+            type="datetime-local"
+            class="form-control"
+            name="dob"
+            formControlName="dob"
+            placeholder="YYYY-MM-DD HH:mm"
+          />
+        </div>
+        <div *ngIf="editForm.get('dob')!.invalid && (editForm.get('dob')!.dirty || editForm.get('dob')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('dob')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+          <small
+            class="form-text text-danger"
+            [hidden]="!editForm.get('dob')?.errors?.ZonedDateTimelocal"
+            jhiTranslate="entity.validation.ZonedDateTimelocal"
+          >
+            This field should be a date and time.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.placeOfBirth" for="field_placeOfBirth">Place Of Birth</label>
+        <input
+          type="text"
+          class="form-control"
+          name="placeOfBirth"
+          id="field_placeOfBirth"
+          data-cy="placeOfBirth"
+          formControlName="placeOfBirth"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.personalPhoneNumber" for="field_personalPhoneNumber"
+          >Personal Phone Number</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="personalPhoneNumber"
+          id="field_personalPhoneNumber"
+          data-cy="personalPhoneNumber"
+          formControlName="personalPhoneNumber"
+        />
+        <div
+          *ngIf="
+            editForm.get('personalPhoneNumber')!.invalid &&
+            (editForm.get('personalPhoneNumber')!.dirty || editForm.get('personalPhoneNumber')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('personalPhoneNumber')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.personalEmail" for="field_personalEmail">Personal Email</label>
+        <input
+          type="text"
+          class="form-control"
+          name="personalEmail"
+          id="field_personalEmail"
+          data-cy="personalEmail"
+          formControlName="personalEmail"
+        />
+        <div
+          *ngIf="editForm.get('personalEmail')!.invalid && (editForm.get('personalEmail')!.dirty || editForm.get('personalEmail')!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('personalEmail')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.permanentAddress" for="field_permanentAddress"
+          >Permanent Address</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="permanentAddress"
+          id="field_permanentAddress"
+          data-cy="permanentAddress"
+          formControlName="permanentAddress"
+        />
+        <div
+          *ngIf="
+            editForm.get('permanentAddress')!.invalid &&
+            (editForm.get('permanentAddress')!.dirty || editForm.get('permanentAddress')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('permanentAddress')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.temporaryAddress" for="field_temporaryAddress"
+          >Temporary Address</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="temporaryAddress"
+          id="field_temporaryAddress"
+          data-cy="temporaryAddress"
+          formControlName="temporaryAddress"
+        />
+        <div
+          *ngIf="
+            editForm.get('temporaryAddress')!.invalid &&
+            (editForm.get('temporaryAddress')!.dirty || editForm.get('temporaryAddress')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('temporaryAddress')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.idNumber" for="field_idNumber">Id Number</label>
+        <input type="text" class="form-control" name="idNumber" id="field_idNumber" data-cy="idNumber" formControlName="idNumber" />
+        <div *ngIf="editForm.get('idNumber')!.invalid && (editForm.get('idNumber')!.dirty || editForm.get('idNumber')!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get('idNumber')?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.idIssuedDate" for="field_idIssuedDate">Id Issued Date</label>
+        <div class="d-flex">
+          <input
+            id="field_idIssuedDate"
+            data-cy="idIssuedDate"
+            type="datetime-local"
+            class="form-control"
+            name="idIssuedDate"
+            formControlName="idIssuedDate"
+            placeholder="YYYY-MM-DD HH:mm"
+          />
+        </div>
+        <div
+          *ngIf="editForm.get('idIssuedDate')!.invalid && (editForm.get('idIssuedDate')!.dirty || editForm.get('idIssuedDate')!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('idIssuedDate')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+          <small
+            class="form-text text-danger"
+            [hidden]="!editForm.get('idIssuedDate')?.errors?.ZonedDateTimelocal"
+            jhiTranslate="entity.validation.ZonedDateTimelocal"
+          >
+            This field should be a date and time.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.idIssuedLocation" for="field_idIssuedLocation"
+          >Id Issued Location</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="idIssuedLocation"
+          id="field_idIssuedLocation"
+          data-cy="idIssuedLocation"
+          formControlName="idIssuedLocation"
+        />
+        <div
+          *ngIf="
+            editForm.get('idIssuedLocation')!.invalid &&
+            (editForm.get('idIssuedLocation')!.dirty || editForm.get('idIssuedLocation')!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get('idIssuedLocation')?.errors?.required"
+            jhiTranslate="entity.validation.required"
+          >
+            This field is required.
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.socialInsuranceNumber" for="field_socialInsuranceNumber"
+          >Social Insurance Number</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="socialInsuranceNumber"
+          id="field_socialInsuranceNumber"
+          data-cy="socialInsuranceNumber"
+          formControlName="socialInsuranceNumber"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.taxIdentificationNumber" for="field_taxIdentificationNumber"
+          >Tax Identification Number</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="taxIdentificationNumber"
+          id="field_taxIdentificationNumber"
+          data-cy="taxIdentificationNumber"
+          formControlName="taxIdentificationNumber"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.qualification" for="field_qualification">Qualification</label>
+        <input
+          type="text"
+          class="form-control"
+          name="qualification"
+          id="field_qualification"
+          data-cy="qualification"
+          formControlName="qualification"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-control-label" jhiTranslate="intranetApp.person.employee" for="field_employee">Employee</label>
+        <select class="form-control" id="field_employee" data-cy="employee" name="employee" formControlName="employee">
+          <option *ngIf="editForm.get(['employee'])!.value == null" [ngValue]="null" selected></option>
+          <option
+            [ngValue]="employeeOption.id === editForm.get('employee')!.value?.id ? editForm.get('employee')!.value : employeeOption"
+            *ngFor="let employeeOption of employeesCollection; trackBy: trackEmployeeById"
+          >
+            {{ employeeOption.id }}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="editForm.get(['employee'])!.invalid && (editForm.get(['employee'])!.dirty || editForm.get(['employee'])!.touched)">
+        <small class="form-text text-danger" *ngIf="editForm.get(['employee'])?.errors?.required" jhiTranslate="entity.validation.required">
+          This field is required.
+        </small>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+          [routerLink]="['/person/new']"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Next</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

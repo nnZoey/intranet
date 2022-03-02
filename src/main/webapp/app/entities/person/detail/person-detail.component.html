@@ -1,0 +1,94 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="person">
+      <h2 data-cy="personDetailsHeading"><span jhiTranslate="intranetApp.person.detail.title">Person</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="intranetApp.person.id">Id</span></dt>
+        <dd>
+          <span>{{ person.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.firstName">First Name</span></dt>
+        <dd>
+          <span>{{ person.firstName }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ person.lastName }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.sex">Sex</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'intranetApp.Sex.' + person.sex }}">{{ person.sex }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.dob">Dob</span></dt>
+        <dd>
+          <span>{{ person.dob | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.placeOfBirth">Place Of Birth</span></dt>
+        <dd>
+          <span>{{ person.placeOfBirth }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.personalPhoneNumber">Personal Phone Number</span></dt>
+        <dd>
+          <span>{{ person.personalPhoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.personalEmail">Personal Email</span></dt>
+        <dd>
+          <span>{{ person.personalEmail }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.permanentAddress">Permanent Address</span></dt>
+        <dd>
+          <span>{{ person.permanentAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.temporaryAddress">Temporary Address</span></dt>
+        <dd>
+          <span>{{ person.temporaryAddress }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.idNumber">Id Number</span></dt>
+        <dd>
+          <span>{{ person.idNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.idIssuedDate">Id Issued Date</span></dt>
+        <dd>
+          <span>{{ person.idIssuedDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.idIssuedLocation">Id Issued Location</span></dt>
+        <dd>
+          <span>{{ person.idIssuedLocation }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.socialInsuranceNumber">Social Insurance Number</span></dt>
+        <dd>
+          <span>{{ person.socialInsuranceNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.taxIdentificationNumber">Tax Identification Number</span></dt>
+        <dd>
+          <span>{{ person.taxIdentificationNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.qualification">Qualification</span></dt>
+        <dd>
+          <span>{{ person.qualification }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.person.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="person.employee">
+            <a [routerLink]="['/employee', person.employee?.id, 'view']">{{ person.employee?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/person', person.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

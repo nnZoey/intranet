@@ -1,0 +1,12 @@
+{
+  "intranetApp": {
+    "Status": {
+      "null": "",
+      "NEW": "NEW",
+      "OPEN": "OPEN",
+      "PROGRESS": "PROGRESS",
+      "COMPLETED": "COMPLETED",
+      "HOLD": "HOLD"
+    }
+  }
+}

@@ -1,0 +1,86 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="employee">
+      <h2 data-cy="employeeDetailsHeading"><span jhiTranslate="intranetApp.employee.detail.title">Employee</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="intranetApp.employee.id">Id</span></dt>
+        <dd>
+          <span>{{ employee.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.effectiveDate">Effective Date</span></dt>
+        <dd>
+          <span>{{ employee.effectiveDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.employeeCode">Employee Code</span></dt>
+        <dd>
+          <span>{{ employee.employeeCode }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.professionalEmail">Professional Email</span></dt>
+        <dd>
+          <span>{{ employee.professionalEmail }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.professionalPhoneNumber">Professional Phone Number</span></dt>
+        <dd>
+          <span>{{ employee.professionalPhoneNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.salary">Salary</span></dt>
+        <dd>
+          <span>{{ employee.salary }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.commissionPct">Commission Pct</span></dt>
+        <dd>
+          <span>{{ employee.commissionPct }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.contractNumber">Contract Number</span></dt>
+        <dd>
+          <span>{{ employee.contractNumber }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.contractStartDate">Contract Start Date</span></dt>
+        <dd>
+          <span>{{ employee.contractStartDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.contractEndDate">Contract End Date</span></dt>
+        <dd>
+          <span>{{ employee.contractEndDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.contractType">Contract Type</span></dt>
+        <dd>
+          <span>{{ employee.contractType }}</span>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.supervisor">Supervisor</span></dt>
+        <dd>
+          <div *ngIf="employee.supervisor">
+            <a [routerLink]="['/employee', employee.supervisor?.id, 'view']">{{ employee.supervisor?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.job">Job</span></dt>
+        <dd>
+          <div *ngIf="employee.job">
+            <a [routerLink]="['/job', employee.job?.id, 'view']">{{ employee.job?.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="intranetApp.employee.department">Department</span></dt>
+        <dd>
+          <div *ngIf="employee.department">
+            <a [routerLink]="['/department', employee.department?.id, 'view']">{{ employee.department?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/employee', employee.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

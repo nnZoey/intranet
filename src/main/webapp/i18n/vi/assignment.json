@@ -1,0 +1,27 @@
+{
+  "intranetApp": {
+    "assignment": {
+      "home": {
+        "title": "Assignments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Assignment",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Assignment",
+        "notFound": "No Assignments found"
+      },
+      "created": "Một Assignment mới được tạo với định danh {{ param }}",
+      "updated": "Một Assignment cập nhật với định danh {{ param }}",
+      "deleted": "Một Assignment đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Assignment {{ id }}?"
+      },
+      "detail": {
+        "title": "Assignment"
+      },
+      "id": "Id",
+      "startDate": "Start Date",
+      "projectRole": "Project Role",
+      "project": "Project",
+      "employee": "Employee"
+    }
+  }
+}

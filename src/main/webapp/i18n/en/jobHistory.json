@@ -1,0 +1,34 @@
+{
+  "intranetApp": {
+    "jobHistory": {
+      "home": {
+        "title": "Job Histories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Job History",
+        "createOrEditLabel": "Create or edit a Job History",
+        "notFound": "No Job Histories found"
+      },
+      "created": "A new Job History is created with identifier {{ param }}",
+      "updated": "A Job History is updated with identifier {{ param }}",
+      "deleted": "A Job History is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Job History {{ id }}?"
+      },
+      "detail": {
+        "title": "Job History"
+      },
+      "id": "Id",
+      "employeeCode": "Employee Code",
+      "effectiveDate": "Effective Date",
+      "salary": "Salary",
+      "commissionPct": "Commission Pct",
+      "contractNumber": "Contract Number",
+      "contractStartDate": "Contract Start Date",
+      "contractEndDate": "Contract End Date",
+      "contractType": "Contract Type",
+      "supervisor": "Supervisor",
+      "job": "Job",
+      "employee": "Employee"
+    }
+  }
+}

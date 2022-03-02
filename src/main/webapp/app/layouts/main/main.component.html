@@ -1,0 +1,546 @@
+<jhi-page-ribbon></jhi-page-ribbon>
+
+<nb-layout withScroll restoreScrollTop>
+  <nb-layout-header fixed>
+    <button nbButton ghost status="basic" size="large" (click)="toggle()"><nb-icon icon="menu-2-outline" status="basic"></nb-icon></button>
+    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
+      <span class="logo-img"></span>
+      <span jhiTranslate="global.title" class="navbar-title">Intranet</span>
+      <span class="navbar-version">{{ version }}</span>
+    </a>
+    <nb-search shape="round" type="rotate-layout">Search employee</nb-search>
+  </nb-layout-header>
+  <nb-sidebar class="sidebar-color" tag="left" start responsive autosize [ngSwitch]="account !== null">
+    <div class="main-content">
+      <nb-card class="nbCard">
+        <button
+          *jhiHasAnyAuthority="'ROLE_ADMIN'"
+          id="jh-create-entity"
+          data-cy="entityCreateButton"
+          [routerLink]="['/employee/new']"
+          nbButton
+          status="primary"
+          shape="semi-round"
+          size="medium"
+        >
+          <nb-icon icon="plus"></nb-icon>Add new employee
+        </button>
+      </nb-card>
+      <mat-accordion class="app-nav-accordion">
+        <mat-nav-list>
+          <mat-list-item
+            (click)="collapseNavbar()"
+            [routerLink]="['/']"
+            [routerLinkActive]="['active']"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <mat-icon [class.active]="selected" matListIcon><nb-icon icon="home"></nb-icon></mat-icon>
+            <a matLine jhiTranslate="global.menu.home">Home</a>
+          </mat-list-item>
+        </mat-nav-list>
+        <mat-expansion-panel
+          class="mat-elevation-z0"
+          *ngSwitchCase="true"
+          [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-expansion-panel-header>
+            <mat-list-item href="javascript:void(0);" id="entity-menu" data-cy="entity">
+              <mat-panel-title>
+                <mat-icon matListIcon><nb-icon icon="layers"></nb-icon></mat-icon>
+                <span jhiTranslate="global.menu.entities.main">Entities</span>
+              </mat-panel-title>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+          <mat-nav-list aria-labelledby="entity-menu">
+            <a
+              mat-list-item
+              routerLink="department"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <mat-icon matListIcon><nb-icon icon="edit"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.entities.department">Department</a>
+            </a>
+
+            <a
+              mat-list-item
+              routerLink="employee"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <mat-icon matListIcon><nb-icon icon="edit"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.entities.employee">Employee</a>
+            </a>
+            <a
+              mat-list-item
+              routerLink="person"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <mat-icon matListIcon><nb-icon icon="edit"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.entities.person">Person</a>
+            </a>
+            <a
+              mat-list-item
+              routerLink="bank-account"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <mat-icon matListIcon><nb-icon icon="edit"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.entities.bankAccount">Bank Account</a>
+            </a>
+            <a
+              mat-list-item
+              routerLink="job"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <mat-icon matListIcon><nb-icon icon="edit"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.entities.job">Job</a>
+            </a>
+            <a
+              mat-list-item
+              routerLink="job-history"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <mat-icon matListIcon><nb-icon icon="edit"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.entities.jobHistory">Job History</a>
+            </a>
+            <a
+              mat-list-item
+              routerLink="project"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <mat-icon matListIcon><nb-icon icon="edit"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.entities.project">Project</a>
+            </a>
+            <a
+              mat-list-item
+              routerLink="assignment"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <mat-icon matListIcon><nb-icon icon="edit"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.entities.assignment">Assignment</a>
+            </a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel
+          class="mat-elevation-z0"
+          *jhiHasAnyAuthority="'ROLE_ADMIN'"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <mat-expansion-panel-header>
+            <mat-list-item href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
+              <mat-panel-title>
+                <mat-icon matListIcon><nb-icon icon="people"></nb-icon></mat-icon>
+                <span jhiTranslate="global.menu.admin.main">Administration</span>
+              </mat-panel-title>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+          <mat-nav-list aria-labelledby="admin-menu">
+            <a mat-list-item routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
+              <mat-icon matListIcon><nb-icon icon="eye"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.admin.userManagement">User management</a>
+            </a>
+            <a mat-list-item routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
+              <mat-icon matListIcon><nb-icon icon="folder"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.admin.metrics">Metrics</a>
+            </a>
+            <a mat-list-item routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
+              <mat-icon matListIcon><nb-icon icon="shield"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.admin.health">Health</a>
+            </a>
+            <a mat-list-item routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
+              <mat-icon matListIcon><nb-icon icon="monitor"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.admin.configuration">Configuration</a>
+            </a>
+            <a mat-list-item routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
+              <mat-icon matListIcon><nb-icon icon="archive"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.admin.logs">Logs</a>
+            </a>
+            <a *ngIf="openAPIEnabled" mat-list-item routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
+              <mat-icon matListIcon><nb-icon icon="book"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.admin.apidocs">API</a>
+            </a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mat-elevation-z0" display="dynamic" *ngIf="languages && languages.length > 1">
+          <mat-expansion-panel-header>
+            <mat-list-item href="javascript:void(0);" id="languagesnavBarDropdown">
+              <mat-panel-title>
+                <mat-icon matListIcon><nb-icon icon="globe-2"></nb-icon></mat-icon>
+                <span jhiTranslate="global.menu.language">Language</span>
+              </mat-panel-title>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+          <mat-nav-list aria-labelledby="languagesnavBarDropdown">
+            <a
+              mat-list-item
+              *ngFor="let language of languages"
+              [jhiActiveMenu]="language"
+              href="javascript:void(0);"
+              (click)="changeLanguage(language); collapseNavbar()"
+              >{{ language | findLanguageFromKey }}</a
+            >
+          </mat-nav-list>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel
+          class="mat-elevation-z0"
+          display="dynamic"
+          [routerLinkActive]="['active']"
+          [routerLinkActiveOptions]="{ exact: true }"
+          *ngIf="!account?.imageUrl"
+          id="account-menu"
+          data-cy="accountMenu"
+        >
+          <mat-expansion-panel-header>
+            <mat-list-item>
+              <mat-panel-title>
+                <mat-icon matListIcon><nb-icon icon="settings-2"></nb-icon></mat-icon>
+                <span jhiTranslate="global.menu.account.main">Account</span>
+              </mat-panel-title>
+            </mat-list-item>
+          </mat-expansion-panel-header>
+          <mat-nav-list aria-labelledby="account-menu">
+            <a
+              mat-list-item
+              *ngSwitchCase="true"
+              routerLink="account/settings"
+              routerLinkActive="active"
+              (click)="collapseNavbar()"
+              data-cy="settings"
+            >
+              <mat-icon [class.active]="selected" matListIcon><nb-icon icon="settings"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.account.settings">Settings</a>
+            </a>
+            <a
+              mat-list-item
+              *ngSwitchCase="true"
+              routerLink="account/password"
+              routerLinkActive="active"
+              (click)="collapseNavbar()"
+              data-cy="passwordItem"
+            >
+              <mat-icon [class.active]="selected" matListIcon><nb-icon icon="message-square"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.account.password">Password</a>
+            </a>
+
+            <a mat-list-item *ngSwitchCase="true" (click)="logout()" id="logout" data-cy="logout">
+              <mat-icon [class.active]="selected" matListIcon><nb-icon icon="log-out"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.account.logout">Sign out</a>
+            </a>
+            <a *ngSwitchCase="false" mat-list-item (click)="login()" id="login" data-cy="login">
+              <mat-icon [class.active]="selected" matListIcon><nb-icon icon="log-in"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.account.login">Sign in</a>
+            </a>
+
+            <a
+              *ngSwitchCase="false"
+              mat-list-item
+              routerLink="account/register"
+              [routerLinkActive]="['active']"
+              (click)="collapseNavbar()"
+              data-cy="register"
+            >
+              <mat-icon [class.active]="selected" matListIcon><nb-icon icon="person-add"></nb-icon></mat-icon>
+              <a jhiTranslate="global.menu.account.register">Register</a>
+            </a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </nb-sidebar>
+  <!--
+    <a
+      class="navbar-toggler d-lg-none"
+      href="javascript:void(0);"
+      data-toggle="collapse"
+      data-target="#navbarResponsive"
+      aria-controls="navbarResponsive"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleNavbar()"
+    >
+      <fa-icon icon="bars"></fa-icon>
+    </a>
+    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+            <span>
+              <fa-icon icon="home"></fa-icon>
+              <span jhiTranslate="global.menu.home">Home</span>
+            </span>
+          </a>
+        </li>
+        <li
+          *ngSwitchCase="true"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+            <span>
+              <fa-icon icon="th-list"></fa-icon>
+              <span jhiTranslate="global.menu.entities.main">Entities</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="department"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.department">Department</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="employee"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.employee">Employee</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="person"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.person">Person</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="bank-account"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.bankAccount">Bank Account</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="job"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.job">Job</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="job-history"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.jobHistory">Job History</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="project"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.project">Project</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="assignment"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.entities.assignment">Assignment</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li
+          *jhiHasAnyAuthority="'ROLE_ADMIN'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
+            <span>
+              <fa-icon icon="users-cog"></fa-icon>
+              <span jhiTranslate="global.menu.admin.main">Administration</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+            <li>
+              <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.admin.userManagement">User management</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.admin.metrics">Metrics</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.admin.health">Health</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.admin.configuration">Configuration</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.admin.logs">Logs</span>
+              </a>
+            </li>
+            <li *ngIf="openAPIEnabled">
+              <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.admin.apidocs">API</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+            <span>
+              <fa-icon icon="flag"></fa-icon>
+              <span jhiTranslate="global.menu.language">Language</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+            <li *ngFor="let language of languages">
+              <a
+                class="dropdown-item"
+                [jhiActiveMenu]="language"
+                href="javascript:void(0);"
+                (click)="changeLanguage(language); collapseNavbar()"
+                >{{ language | findLanguageFromKey }}</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
+            <span *ngIf="!account?.imageUrl">
+              <fa-icon icon="user"></fa-icon>
+              <span jhiTranslate="global.menu.account.main">Account</span>
+            </span>
+            <span *ngIf="account?.imageUrl">
+              <img [src]="account!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+            <li *ngSwitchCase="true">
+              <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active" (click)="collapseNavbar()" data-cy="settings">
+                <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.account.settings">Settings</span>
+              </a>
+            </li>
+            <li *ngSwitchCase="true">
+              <a
+                class="dropdown-item"
+                routerLink="account/password"
+                routerLinkActive="active"
+                (click)="collapseNavbar()"
+                data-cy="passwordItem"
+              >
+                <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.account.password">Password</span>
+              </a>
+            </li>
+            <li *ngSwitchCase="true">
+              <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+                <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.account.logout">Sign out</span>
+              </a>
+            </li>
+            <li *ngSwitchCase="false">
+              <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+                <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.account.login">Sign in</span>
+              </a>
+            </li>
+            <li *ngSwitchCase="false">
+              <a class="dropdown-item" routerLink="account/register" routerLinkActive="active" (click)="collapseNavbar()" data-cy="register">
+                <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
+                <span jhiTranslate="global.menu.account.register">Register</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>-->
+
+  <nb-layout-column class="colored-column-basic">
+    <nb-card accent="info">
+      <div class="container-fluid">
+        <div class="card jh-card">
+          <router-outlet></router-outlet>
+        </div>
+        <jhi-footer></jhi-footer>
+      </div>
+    </nb-card>
+  </nb-layout-column>
+</nb-layout>

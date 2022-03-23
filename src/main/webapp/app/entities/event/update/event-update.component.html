@@ -1,0 +1,107 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="leap-event-heading" data-cy="EventCreateUpdateHeading" leapTranslate="intranetApp.event.home.createOrEditLabel">
+        Create or edit a Event
+      </h2>
+
+      <div>
+        <leap-alert-error></leap-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" leapTranslate="intranetApp.event.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.event.eventTitle" for="field_eventTitle">Event Title</label>
+          <input
+            type="text"
+            class="form-control"
+            name="eventTitle"
+            id="field_eventTitle"
+            data-cy="eventTitle"
+            formControlName="eventTitle"
+          />
+          <div *ngIf="editForm.get('eventTitle')!.invalid && (editForm.get('eventTitle')!.dirty || editForm.get('eventTitle')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('eventTitle')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.event.eventDate" for="field_eventDate">Event Date</label>
+          <div class="d-flex">
+            <input
+              id="field_eventDate"
+              data-cy="eventDate"
+              type="datetime-local"
+              class="form-control"
+              name="eventDate"
+              formControlName="eventDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('eventDate')!.invalid && (editForm.get('eventDate')!.dirty || editForm.get('eventDate')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('eventDate')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('eventDate')?.errors?.ZonedDateTimelocal"
+              leapTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.event.description" for="field_description">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="field_description"
+            data-cy="description"
+            formControlName="description"
+          />
+          <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('description')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span leapTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span leapTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

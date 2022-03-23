@@ -1,0 +1,358 @@
+<div>
+  <h2 *leapHasAnyAuthority="'ROLE_ADMIN'" id="page-heading" data-cy="EmployeeHeading">
+    <span leapTranslate="intranetApp.employee.home.title">Employees</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span leapTranslate="intranetApp.employee.home.refreshListLabel">Refresh List</span>
+      </button>
+
+    </div>
+  </h2>
+
+  <leap-alert-error></leap-alert-error>
+
+  <leap-alert></leap-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="employees?.length === 0">
+    <span leapTranslate="intranetApp.employee.home.notFound">No employees found</span>
+  </div>
+
+  <div  class="table-responsive" id="entities" *ngIf="employees && employees.length > 0">
+    <table *leapHasAnyAuthority="'ROLE_ADMIN'" class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr leapSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" leapSortBy="id"><span leapTranslate="intranetApp.employee.id">Id</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" leapSortBy="employeeCode">
+            <span leapTranslate="intranetApp.employee.employeeCode">Employee Code</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="firstName">
+            <span leapTranslate="intranetApp.employee.firstName">First Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="lastName">
+            <span leapTranslate="intranetApp.employee.lastName">Last Name</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="image">
+            <span leapTranslate="intranetApp.employee.image">Image</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="effectiveDate">
+            <span leapTranslate="intranetApp.employee.effectiveDate">Effective Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="slogan">
+            <span leapTranslate="intranetApp.employee.slogan">Slogan</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="professionalEmail">
+            <span leapTranslate="intranetApp.employee.professionalEmail">Professional Email</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="professionalPhoneNumber">
+            <span leapTranslate="intranetApp.employee.professionalPhoneNumber">Professional Phone Number</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="commissionPct">
+            <span leapTranslate="intranetApp.employee.commissionPct">Commission Pct</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="hiredDate">
+            <span leapTranslate="intranetApp.employee.hiredDate">Hired Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="contractNumber">
+            <span leapTranslate="intranetApp.employee.contractNumber">Contract Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="contractStartDate">
+            <span leapTranslate="intranetApp.employee.contractStartDate">Contract Start Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="contractEndDate">
+            <span leapTranslate="intranetApp.employee.contractEndDate">Contract End Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="contractType">
+            <span leapTranslate="intranetApp.employee.contractType">Contract Type</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="contractFile">
+            <span leapTranslate="intranetApp.employee.contractFile">Contract File</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="salary">
+            <span leapTranslate="intranetApp.employee.salary">Salary</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="sex"><span leapTranslate="intranetApp.employee.sex">Sex</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" leapSortBy="dob"><span leapTranslate="intranetApp.employee.dob">Dob</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" leapSortBy="placeOfBirth">
+            <span leapTranslate="intranetApp.employee.placeOfBirth">Place Of Birth</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="personalPhoneNumber">
+            <span leapTranslate="intranetApp.employee.personalPhoneNumber">Personal Phone Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="permanentAddress">
+            <span leapTranslate="intranetApp.employee.permanentAddress">Permanent Address</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="temporaryAddress">
+            <span leapTranslate="intranetApp.employee.temporaryAddress">Temporary Address</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="idNumber">
+            <span leapTranslate="intranetApp.employee.idNumber">Id Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="idIssuedDate">
+            <span leapTranslate="intranetApp.employee.idIssuedDate">Id Issued Date</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="idIssuedLocation">
+            <span leapTranslate="intranetApp.employee.idIssuedLocation">Id Issued Location</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="socialInsuranceNumber">
+            <span leapTranslate="intranetApp.employee.socialInsuranceNumber">Social Insurance Number</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="taxIdentificationNumber">
+            <span leapTranslate="intranetApp.employee.taxIdentificationNumber">Tax Identification Number</span>
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="qualification">
+            <span leapTranslate="intranetApp.employee.qualification">Qualification</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="bankAccount">
+            <span leapTranslate="intranetApp.employee.bankAccount">Bank Account</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="bankCode">
+            <span leapTranslate="intranetApp.employee.bankCode">Bank Code</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="userId.id">
+            <span leapTranslate="intranetApp.employee.userId">User Id</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="supervisor.id">
+            <span leapTranslate="intranetApp.employee.supervisor">Supervisor</span> <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" leapSortBy="job.id"><span leapTranslate="intranetApp.employee.job">Job</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let employee of employees; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/employee', employee.id, 'view']">{{ employee.id }}</a>
+          </td>
+          <td>{{ employee.employeeCode }}</td>
+          <td>{{ employee.firstName }}</td>
+          <td>{{ employee.lastName }}</td>
+          <td>
+            <a *ngIf="employee.image" (click)="openFile(employee.image, employee.imageContentType)">
+              <img
+                [src]="'data:' + employee.imageContentType + ';base64,' + employee.image"
+                style="max-height: 30px"
+                alt="employee image"
+              />
+            </a>
+            <span *ngIf="employee.image">{{ employee.imageContentType }}, {{ byteSize(employee.image) }}</span>
+          </td>
+          <td>{{ employee.effectiveDate | formatMediumDatetime }}</td>
+          <td>{{ employee.slogan }}</td>
+          <td>{{ employee.professionalEmail }}</td>
+          <td>{{ employee.professionalPhoneNumber }}</td>
+          <td>{{ employee.commissionPct }}</td>
+          <td>{{ employee.hiredDate | formatMediumDatetime }}</td>
+          <td>{{ employee.contractNumber }}</td>
+          <td>{{ employee.contractStartDate | formatMediumDatetime }}</td>
+          <td>{{ employee.contractEndDate | formatMediumDatetime }}</td>
+          <td leapTranslate="{{ 'intranetApp.ContractType.' + employee.contractType }}">{{ employee.contractType }}</td>
+          <td>
+            <a
+              *ngIf="employee.contractFile"
+              (click)="openFile(employee.contractFile, employee.contractFileContentType)"
+              leapTranslate="entity.action.open"
+              >open</a
+            >
+            <span *ngIf="employee.contractFile">{{ employee.contractFileContentType }}, {{ byteSize(employee.contractFile) }}</span>
+          </td>
+          <td>{{ employee.salary }}</td>
+          <td leapTranslate="{{ 'intranetApp.Sex.' + employee.sex }}">{{ employee.sex }}</td>
+          <td>{{ employee.dob | formatMediumDatetime }}</td>
+          <td>{{ employee.placeOfBirth }}</td>
+          <td>{{ employee.personalPhoneNumber }}</td>
+          <td>{{ employee.permanentAddress }}</td>
+          <td>{{ employee.temporaryAddress }}</td>
+          <td>{{ employee.idNumber }}</td>
+          <td>{{ employee.idIssuedDate | formatMediumDatetime }}</td>
+          <td>{{ employee.idIssuedLocation }}</td>
+          <td>{{ employee.socialInsuranceNumber }}</td>
+          <td>{{ employee.taxIdentificationNumber }}</td>
+          <td>{{ employee.qualification }}</td>
+          <td>{{ employee.bankAccount }}</td>
+          <td>{{ employee.bankCode }}</td>
+          <td>
+            {{ employee.userId?.id }}
+          </td>
+          <td>
+            <div *ngIf="employee.supervisor">
+              <a [routerLink]="['/employee', employee.supervisor?.id, 'view']">{{ employee.supervisor?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="employee.job">
+              <a [routerLink]="['/job', employee.job?.id, 'view']">{{ employee.job?.id }}</a>
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <div *ngIf="employeeUserId">
+          <h2 data-cy="employeeDetailsHeading"><span leapTranslate="intranetApp.employee.detail.title">Employee</span></h2>
+    
+          <hr />
+    
+          <leap-alert-error></leap-alert-error>
+    
+          <leap-alert></leap-alert>
+    
+          <dl class="row-md jh-entity-details">
+            <dt><span leapTranslate="intranetApp.employee.id">Id</span></dt>
+            <dd>
+              <span>{{ employeeUserId.id }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.employeeCode">Employee Code</span></dt>
+            <dd>
+              <span>{{ employeeUserId.employeeCode }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.firstName">First Name</span></dt>
+            <dd>
+              <span>{{ employeeUserId.firstName }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.lastName">Last Name</span></dt>
+            <dd>
+              <span>{{ employeeUserId.lastName }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.image">Image</span></dt>
+            <dd>
+              <div *ngIf="employeeUserId.image">
+                <a (click)="openFile(employeeUserId.image, employeeUserId.imageContentType)">
+                  <img [src]="'data:' + employeeUserId.imageContentType + ';base64,' + employeeUserId.image" style="max-width: 100%" alt="employee image" />
+                </a>
+                {{ employeeUserId.imageContentType }}, {{ byteSize(employeeUserId.image) }}
+              </div>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.effectiveDate">Effective Date</span></dt>
+            <dd>
+              <span>{{ employeeUserId.effectiveDate | formatMediumDatetime }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.slogan">Slogan</span></dt>
+            <dd>
+              <span>{{ employeeUserId.slogan }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.professionalEmail">Professional Email</span></dt>
+            <dd>
+              <span>{{ employeeUserId.professionalEmail }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.professionalPhoneNumber">Professional Phone Number</span></dt>
+            <dd>
+              <span>{{ employeeUserId.professionalPhoneNumber }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.commissionPct">Commission Pct</span></dt>
+            <dd>
+              <span>{{ employeeUserId.commissionPct }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.hiredDate">Hired Date</span></dt>
+            <dd>
+              <span>{{ employeeUserId.hiredDate | formatMediumDatetime }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.contractNumber">Contract Number</span></dt>
+            <dd>
+              <span>{{ employeeUserId.contractNumber }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.contractStartDate">Contract Start Date</span></dt>
+            <dd>
+              <span>{{ employeeUserId.contractStartDate | formatMediumDatetime }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.contractEndDate">Contract End Date</span></dt>
+            <dd>
+              <span>{{ employeeUserId.contractEndDate | formatMediumDatetime }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.contractType">Contract Type</span></dt>
+            <dd>
+              <span leapTranslate="{{ 'intranetApp.ContractType.' + employeeUserId.contractType }}">{{ employeeUserId.contractType }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.contractFile">Contract File</span></dt>
+            <dd>
+              <div *ngIf="employeeUserId.contractFile">
+                <a (click)="openFile(employeeUserId.contractFile, employeeUserId.contractFileContentType)" leapTranslate="entity.action.open">open</a>
+                {{ employeeUserId.contractFileContentType }}, {{ byteSize(employeeUserId.contractFile) }}
+              </div>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.salary">Salary</span></dt>
+            <dd>
+              <span>{{ employeeUserId.salary }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.sex">Sex</span></dt>
+            <dd>
+              <span leapTranslate="{{ 'intranetApp.Sex.' + employeeUserId.sex }}">{{ employeeUserId.sex }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.dob">Dob</span></dt>
+            <dd>
+              <span>{{ employeeUserId.dob | formatMediumDatetime }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.placeOfBirth">Place Of Birth</span></dt>
+            <dd>
+              <span>{{ employeeUserId.placeOfBirth }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.personalPhoneNumber">Personal Phone Number</span></dt>
+            <dd>
+              <span>{{ employeeUserId.personalPhoneNumber }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.permanentAddress">Permanent Address</span></dt>
+            <dd>
+              <span>{{ employeeUserId.permanentAddress }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.temporaryAddress">Temporary Address</span></dt>
+            <dd>
+              <span>{{ employeeUserId.temporaryAddress }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.idNumber">Id Number</span></dt>
+            <dd>
+              <span>{{ employeeUserId.idNumber }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.idIssuedDate">Id Issued Date</span></dt>
+            <dd>
+              <span>{{ employeeUserId.idIssuedDate | formatMediumDatetime }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.idIssuedLocation">Id Issued Location</span></dt>
+            <dd>
+              <span>{{ employeeUserId.idIssuedLocation }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.socialInsuranceNumber">Social Insurance Number</span></dt>
+            <dd>
+              <span>{{ employeeUserId.socialInsuranceNumber }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.taxIdentificationNumber">Tax Identification Number</span></dt>
+            <dd>
+              <span>{{ employeeUserId.taxIdentificationNumber }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.qualification">Qualification</span></dt>
+            <dd>
+              <span>{{ employeeUserId.qualification }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.bankAccount">Bank Account</span></dt>
+            <dd>
+              <span>{{ employeeUserId.bankAccount }}</span>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.bankCode">Bank Code</span></dt>
+            <dd>
+              <span>{{ employeeUserId.bankCode }}</span>
+            </dd>
+           
+            <dt><span leapTranslate="intranetApp.employee.supervisor">Supervisor</span></dt>
+            <dd>
+              <div *ngIf="employeeUserId.supervisor">
+                <a [routerLink]="['/employee', employeeUserId.supervisor?.id, 'view']">{{ employeeUserId.supervisor?.id }}</a>
+              </div>
+            </dd>
+            <dt><span leapTranslate="intranetApp.employee.job">Job</span></dt>
+            <dd>
+              <div *ngIf="employeeUserId.job">
+                <a [routerLink]="['/job', employeeUserId.job?.id, 'view']">{{ employeeUserId.job?.id }}</a>
+              </div>
+            </dd>
+          </dl>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

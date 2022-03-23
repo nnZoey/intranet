@@ -1,0 +1,26 @@
+{
+  "intranetApp": {
+    "event": {
+      "home": {
+        "title": "Events",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Event",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Event",
+        "notFound": "No Events found"
+      },
+      "created": "Một Event mới được tạo với định danh {{ param }}",
+      "updated": "Một Event cập nhật với định danh {{ param }}",
+      "deleted": "Một Event đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Event {{ id }}?"
+      },
+      "detail": {
+        "title": "Event"
+      },
+      "id": "Id",
+      "eventTitle": "Event Title",
+      "eventDate": "Event Date",
+      "description": "Description"
+    }
+  }
+}

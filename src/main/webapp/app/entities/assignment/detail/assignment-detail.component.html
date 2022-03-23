@@ -1,0 +1,48 @@
+<div  class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="assignment">
+      <h2 data-cy="assignmentDetailsHeading"><span leapTranslate="intranetApp.assignment.detail.title">Assignment</span></h2>
+
+      <hr />
+
+      <leap-alert-error></leap-alert-error>
+
+      <leap-alert></leap-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span leapTranslate="intranetApp.assignment.id">Id</span></dt>
+        <dd>
+          <span>{{ assignment.id }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.assignment.startDate">Start Date</span></dt>
+        <dd>
+          <span>{{ assignment.startDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.assignment.projectRole">Project Role</span></dt>
+        <dd>
+          <span leapTranslate="{{ 'intranetApp.ProjectRole.' + assignment.projectRole }}">{{ assignment.projectRole }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.assignment.project">Project</span></dt>
+        <dd>
+          <div *ngIf="assignment.project">
+            <a [routerLink]="['/project', assignment.project?.id, 'view']">{{ assignment.project?.id }}</a>
+          </div>
+        </dd>
+        <dt><span leapTranslate="intranetApp.assignment.employee">Employee</span></dt>
+        <dd>
+          <div *ngIf="assignment.employee">
+            <a [routerLink]="['/employee', assignment.employee?.id, 'view']">{{ assignment.employee?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span leapTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/assignment', assignment.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span leapTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

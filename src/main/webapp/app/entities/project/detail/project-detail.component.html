@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="project">
+      <h2 data-cy="projectDetailsHeading"><span leapTranslate="intranetApp.project.detail.title">Project</span></h2>
+
+      <hr />
+
+      <leap-alert-error></leap-alert-error>
+
+      <leap-alert></leap-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span leapTranslate="intranetApp.project.id">Id</span></dt>
+        <dd>
+          <span>{{ project.id }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.project.name">Name</span></dt>
+        <dd>
+          <span>{{ project.name }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.project.description">Description</span></dt>
+        <dd>
+          <span>{{ project.description }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.project.startDate">Start Date</span></dt>
+        <dd>
+          <span>{{ project.startDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.project.endDate">End Date</span></dt>
+        <dd>
+          <span>{{ project.endDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.project.status">Status</span></dt>
+        <dd>
+          <span leapTranslate="{{ 'intranetApp.ProjectStatus.' + project.status }}">{{ project.status }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span leapTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/project', project.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span leapTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

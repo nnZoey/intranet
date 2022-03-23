@@ -1,0 +1,106 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="leap-job-heading" data-cy="JobCreateUpdateHeading" leapTranslate="intranetApp.job.home.createOrEditLabel">
+        Create or edit a Job
+      </h2>
+
+      <div>
+        <leap-alert-error></leap-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" leapTranslate="intranetApp.job.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.job.jobTitle" for="field_jobTitle">Job Title</label>
+          <input type="text" class="form-control" name="jobTitle" id="field_jobTitle" data-cy="jobTitle" formControlName="jobTitle" />
+          <div *ngIf="editForm.get('jobTitle')!.invalid && (editForm.get('jobTitle')!.dirty || editForm.get('jobTitle')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('jobTitle')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.job.minSalary" for="field_minSalary">Min Salary</label>
+          <input type="number" class="form-control" name="minSalary" id="field_minSalary" data-cy="minSalary" formControlName="minSalary" />
+          <div *ngIf="editForm.get('minSalary')!.invalid && (editForm.get('minSalary')!.dirty || editForm.get('minSalary')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('minSalary')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('minSalary')?.errors?.min"
+              leapTranslate="entity.validation.min"
+              [translateValues]="{ min: 1000000 }"
+            >
+              This field should be at least 1000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('minSalary')?.errors?.number"
+              leapTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.job.maxSalary" for="field_maxSalary">Max Salary</label>
+          <input type="number" class="form-control" name="maxSalary" id="field_maxSalary" data-cy="maxSalary" formControlName="maxSalary" />
+          <div *ngIf="editForm.get('maxSalary')!.invalid && (editForm.get('maxSalary')!.dirty || editForm.get('maxSalary')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('maxSalary')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('maxSalary')?.errors?.min"
+              leapTranslate="entity.validation.min"
+              [translateValues]="{ min: 1000000 }"
+            >
+              This field should be at least 1000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('maxSalary')?.errors?.number"
+              leapTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span leapTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span leapTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

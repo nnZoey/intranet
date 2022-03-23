@@ -1,0 +1,172 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="employee">
+      <h2 data-cy="employeeDetailsHeading"><span leapTranslate="intranetApp.employee.detail.title">Employee</span></h2>
+
+      <hr />
+
+      <leap-alert-error></leap-alert-error>
+
+      <leap-alert></leap-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span leapTranslate="intranetApp.employee.id">Id</span></dt>
+        <dd>
+          <span>{{ employee.id }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.employeeCode">Employee Code</span></dt>
+        <dd>
+          <span>{{ employee.employeeCode }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.firstName">First Name</span></dt>
+        <dd>
+          <span>{{ employee.firstName }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.lastName">Last Name</span></dt>
+        <dd>
+          <span>{{ employee.lastName }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.image">Image</span></dt>
+        <dd>
+          <div *ngIf="employee.image">
+            <a (click)="openFile(employee.image, employee.imageContentType)">
+              <img [src]="'data:' + employee.imageContentType + ';base64,' + employee.image" style="max-width: 100%" alt="employee image" />
+            </a>
+            {{ employee.imageContentType }}, {{ byteSize(employee.image) }}
+          </div>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.effectiveDate">Effective Date</span></dt>
+        <dd>
+          <span>{{ employee.effectiveDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.slogan">Slogan</span></dt>
+        <dd>
+          <span>{{ employee.slogan }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.professionalEmail">Professional Email</span></dt>
+        <dd>
+          <span>{{ employee.professionalEmail }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.professionalPhoneNumber">Professional Phone Number</span></dt>
+        <dd>
+          <span>{{ employee.professionalPhoneNumber }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.commissionPct">Commission Pct</span></dt>
+        <dd>
+          <span>{{ employee.commissionPct }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.hiredDate">Hired Date</span></dt>
+        <dd>
+          <span>{{ employee.hiredDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.contractNumber">Contract Number</span></dt>
+        <dd>
+          <span>{{ employee.contractNumber }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.contractStartDate">Contract Start Date</span></dt>
+        <dd>
+          <span>{{ employee.contractStartDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.contractEndDate">Contract End Date</span></dt>
+        <dd>
+          <span>{{ employee.contractEndDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.contractType">Contract Type</span></dt>
+        <dd>
+          <span leapTranslate="{{ 'intranetApp.ContractType.' + employee.contractType }}">{{ employee.contractType }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.contractFile">Contract File</span></dt>
+        <dd>
+          <div *ngIf="employee.contractFile">
+            <a (click)="openFile(employee.contractFile, employee.contractFileContentType)" leapTranslate="entity.action.open">open</a>
+            {{ employee.contractFileContentType }}, {{ byteSize(employee.contractFile) }}
+          </div>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.salary">Salary</span></dt>
+        <dd>
+          <span>{{ employee.salary }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.sex">Sex</span></dt>
+        <dd>
+          <span leapTranslate="{{ 'intranetApp.Sex.' + employee.sex }}">{{ employee.sex }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.dob">Dob</span></dt>
+        <dd>
+          <span>{{ employee.dob | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.placeOfBirth">Place Of Birth</span></dt>
+        <dd>
+          <span>{{ employee.placeOfBirth }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.personalPhoneNumber">Personal Phone Number</span></dt>
+        <dd>
+          <span>{{ employee.personalPhoneNumber }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.permanentAddress">Permanent Address</span></dt>
+        <dd>
+          <span>{{ employee.permanentAddress }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.temporaryAddress">Temporary Address</span></dt>
+        <dd>
+          <span>{{ employee.temporaryAddress }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.idNumber">Id Number</span></dt>
+        <dd>
+          <span>{{ employee.idNumber }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.idIssuedDate">Id Issued Date</span></dt>
+        <dd>
+          <span>{{ employee.idIssuedDate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.idIssuedLocation">Id Issued Location</span></dt>
+        <dd>
+          <span>{{ employee.idIssuedLocation }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.socialInsuranceNumber">Social Insurance Number</span></dt>
+        <dd>
+          <span>{{ employee.socialInsuranceNumber }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.taxIdentificationNumber">Tax Identification Number</span></dt>
+        <dd>
+          <span>{{ employee.taxIdentificationNumber }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.qualification">Qualification</span></dt>
+        <dd>
+          <span>{{ employee.qualification }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.bankAccount">Bank Account</span></dt>
+        <dd>
+          <span>{{ employee.bankAccount }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.bankCode">Bank Code</span></dt>
+        <dd>
+          <span>{{ employee.bankCode }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.userId">User Id</span></dt>
+        <dd>
+          <span>{{ employee.userId?.id }}</span>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.supervisor">Supervisor</span></dt>
+        <dd>
+          <div *ngIf="employee.supervisor">
+            <a [routerLink]="['/employee', employee.supervisor?.id, 'view']">{{ employee.supervisor?.id }}</a>
+          </div>
+        </dd>
+        <dt><span leapTranslate="intranetApp.employee.job">Job</span></dt>
+        <dd>
+          <div *ngIf="employee.job">
+            <a [routerLink]="['/job', employee.job?.id, 'view']">{{ employee.job?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span leapTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/employee', employee.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span leapTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

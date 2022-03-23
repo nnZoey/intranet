@@ -1,0 +1,58 @@
+{
+  "intranetApp": {
+    "employee": {
+      "home": {
+        "title": "Employees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Thêm mới một Employee",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Employee",
+        "notFound": "No Employees found"
+      },
+      "created": "Một Employee mới được tạo với định danh {{ param }}",
+      "updated": "Một Employee cập nhật với định danh {{ param }}",
+      "deleted": "Một Employee đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Employee {{ id }}?"
+      },
+      "detail": {
+        "title": "Employee"
+      },
+      "id": "Id",
+      "employeeCode": "Employee Code",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "image": "Image",
+      "effectiveDate": "Effective Date",
+      "slogan": "Slogan",
+      "professionalEmail": "Professional Email",
+      "professionalPhoneNumber": "Professional Phone Number",
+      "commissionPct": "Commission Pct",
+      "hiredDate": "Hired Date",
+      "contractNumber": "Contract Number",
+      "contractStartDate": "Contract Start Date",
+      "contractEndDate": "Contract End Date",
+      "contractType": "Contract Type",
+      "contractFile": "Contract File",
+      "salary": "Salary",
+      "sex": "Sex",
+      "dob": "Dob",
+      "placeOfBirth": "Place Of Birth",
+      "personalPhoneNumber": "Personal Phone Number",
+      "permanentAddress": "Permanent Address",
+      "temporaryAddress": "Temporary Address",
+      "idNumber": "Id Number",
+      "idIssuedDate": "Id Issued Date",
+      "idIssuedLocation": "Id Issued Location",
+      "socialInsuranceNumber": "Social Insurance Number",
+      "taxIdentificationNumber": "Tax Identification Number",
+      "qualification": "Qualification",
+      "bankAccount": "Bank Account",
+      "bankCode": "Bank Code",
+      "userId": "User Id",
+      "assignment": "Assignment",
+      "supervisor": "Supervisor",
+      "job": "Job",
+      "teamMembers": "Team Members"
+    }
+  }
+}

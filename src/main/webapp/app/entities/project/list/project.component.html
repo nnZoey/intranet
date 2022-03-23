@@ -1,0 +1,89 @@
+<div>
+  <h2 id="page-heading" data-cy="ProjectHeading">
+    <span leapTranslate="intranetApp.project.home.title">Projects</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span leapTranslate="intranetApp.project.home.refreshListLabel">Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-project"
+        [routerLink]="['/project/new']"
+        *leapHasAnyAuthority="'ROLE_ADMIN'"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span leapTranslate="intranetApp.project.home.createLabel"> Create a new Project </span>
+      </button>
+    </div>
+  </h2>
+
+  <leap-alert-error></leap-alert-error>
+
+  <leap-alert></leap-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="projects?.length === 0">
+    <span leapTranslate="intranetApp.project.home.notFound">No projects found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="projects && projects.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span leapTranslate="intranetApp.project.id">Id</span></th>
+          <th scope="col"><span leapTranslate="intranetApp.project.name">Name</span></th>
+          <th scope="col"><span leapTranslate="intranetApp.project.description">Description</span></th>
+          <th scope="col"><span leapTranslate="intranetApp.project.startDate">Start Date</span></th>
+          <th scope="col"><span leapTranslate="intranetApp.project.endDate">End Date</span></th>
+          <th scope="col"><span leapTranslate="intranetApp.project.status">Status</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of projects; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/project', project.id, 'view']">{{ project.id }}</a>
+          </td>
+          <td>{{ project.name }}</td>
+          <td>{{ project.description }}</td>
+          <td>{{ project.startDate | formatMediumDatetime }}</td>
+          <td>{{ project.endDate | formatMediumDatetime }}</td>
+          <td leapTranslate="{{ 'intranetApp.ProjectStatus.' + project.status }}">{{ project.status }}</td>
+          <td class="text-right">
+            <div
+              *leapHasAnyAuthority="'ROLE_ADMIN'"
+              class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/project', project.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" leapTranslate="entity.action.view">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/project', project.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" leapTranslate="entity.action.edit">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(project)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" leapTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

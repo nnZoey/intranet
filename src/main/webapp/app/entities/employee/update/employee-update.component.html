@@ -1,0 +1,811 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="leap-employee-heading" data-cy="EmployeeCreateUpdateHeading" leapTranslate="intranetApp.employee.home.createOrEditLabel">
+        Create or edit a Employee
+      </h2>
+
+      <div>
+        <leap-alert-error></leap-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.id" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.employeeCode" for="field_employeeCode">Employee Code</label>
+          <input
+            type="text"
+            class="form-control"
+            name="employeeCode"
+            id="field_employeeCode"
+            data-cy="employeeCode"
+            formControlName="employeeCode"
+          />
+          <div
+            *ngIf="editForm.get('employeeCode')!.invalid && (editForm.get('employeeCode')!.dirty || editForm.get('employeeCode')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('employeeCode')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.firstName" for="field_firstName">First Name</label>
+          <input type="text" class="form-control" name="firstName" id="field_firstName" data-cy="firstName" formControlName="firstName" />
+          <div *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('firstName')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.lastName" for="field_lastName">Last Name</label>
+          <input type="text" class="form-control" name="lastName" id="field_lastName" data-cy="lastName" formControlName="lastName" />
+          <div *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('lastName')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.image" for="field_image">Image</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('image')!.value"
+              alt="employee image"
+            />
+            <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_image"
+              data-cy="image"
+              (change)="setFileData($event, 'image', true)"
+              accept="image/*"
+              leapTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageContentType"
+            id="field_imageContentType"
+            formControlName="imageContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.effectiveDate" for="field_effectiveDate"
+            >Effective Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_effectiveDate"
+              data-cy="effectiveDate"
+              type="datetime-local"
+              class="form-control"
+              name="effectiveDate"
+              formControlName="effectiveDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('effectiveDate')!.invalid && (editForm.get('effectiveDate')!.dirty || editForm.get('effectiveDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('effectiveDate')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('effectiveDate')?.errors?.ZonedDateTimelocal"
+              leapTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.slogan" for="field_slogan">Slogan</label>
+          <input type="text" class="form-control" name="slogan" id="field_slogan" data-cy="slogan" formControlName="slogan" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.professionalEmail" for="field_professionalEmail"
+            >Professional Email</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="professionalEmail"
+            id="field_professionalEmail"
+            data-cy="professionalEmail"
+            formControlName="professionalEmail"
+          />
+          <div
+            *ngIf="
+              editForm.get('professionalEmail')!.invalid &&
+              (editForm.get('professionalEmail')!.dirty || editForm.get('professionalEmail')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('professionalEmail')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.professionalPhoneNumber" for="field_professionalPhoneNumber"
+            >Professional Phone Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="professionalPhoneNumber"
+            id="field_professionalPhoneNumber"
+            data-cy="professionalPhoneNumber"
+            formControlName="professionalPhoneNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('professionalPhoneNumber')!.invalid &&
+              (editForm.get('professionalPhoneNumber')!.dirty || editForm.get('professionalPhoneNumber')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('professionalPhoneNumber')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.commissionPct" for="field_commissionPct"
+            >Commission Pct</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="commissionPct"
+            id="field_commissionPct"
+            data-cy="commissionPct"
+            formControlName="commissionPct"
+          />
+          <div
+            *ngIf="
+              editForm.get('commissionPct')!.invalid && (editForm.get('commissionPct')!.dirty || editForm.get('commissionPct')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('commissionPct')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('commissionPct')?.errors?.min"
+              leapTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              This field should be at least 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('commissionPct')?.errors?.max"
+              leapTranslate="entity.validation.max"
+              [translateValues]="{ max: 100 }"
+            >
+              This field cannot be more than 100.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('commissionPct')?.errors?.number"
+              leapTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.hiredDate" for="field_hiredDate">Hired Date</label>
+          <div class="d-flex">
+            <input
+              id="field_hiredDate"
+              data-cy="hiredDate"
+              type="datetime-local"
+              class="form-control"
+              name="hiredDate"
+              formControlName="hiredDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('hiredDate')!.invalid && (editForm.get('hiredDate')!.dirty || editForm.get('hiredDate')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('hiredDate')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('hiredDate')?.errors?.ZonedDateTimelocal"
+              leapTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.contractNumber" for="field_contractNumber"
+            >Contract Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="contractNumber"
+            id="field_contractNumber"
+            data-cy="contractNumber"
+            formControlName="contractNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('contractNumber')!.invalid && (editForm.get('contractNumber')!.dirty || editForm.get('contractNumber')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('contractNumber')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.contractStartDate" for="field_contractStartDate"
+            >Contract Start Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_contractStartDate"
+              data-cy="contractStartDate"
+              type="datetime-local"
+              class="form-control"
+              name="contractStartDate"
+              formControlName="contractStartDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('contractStartDate')!.invalid &&
+              (editForm.get('contractStartDate')!.dirty || editForm.get('contractStartDate')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('contractStartDate')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('contractStartDate')?.errors?.ZonedDateTimelocal"
+              leapTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.contractEndDate" for="field_contractEndDate"
+            >Contract End Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_contractEndDate"
+              data-cy="contractEndDate"
+              type="datetime-local"
+              class="form-control"
+              name="contractEndDate"
+              formControlName="contractEndDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.contractType" for="field_contractType">Contract Type</label>
+          <select class="form-control" name="contractType" formControlName="contractType" id="field_contractType" data-cy="contractType">
+            <option [ngValue]="null">{{ 'intranetApp.ContractType.null' | translate }}</option>
+            <option *ngFor="let contractType of contractTypeValues" [value]="contractType">
+              {{ 'intranetApp.ContractType.' + contractType | translate }}
+            </option>
+          </select>
+          <div
+            *ngIf="editForm.get('contractType')!.invalid && (editForm.get('contractType')!.dirty || editForm.get('contractType')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('contractType')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.contractFile" for="field_contractFile">Contract File</label>
+          <div>
+            <div *ngIf="editForm.get('contractFile')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-left"
+                (click)="openFile(editForm.get('contractFile')!.value, editForm.get('contractFileContentType')!.value)"
+                leapTranslate="entity.action.open"
+                >open</a
+              ><br />
+              <span class="pull-left"
+                >{{ editForm.get('contractFileContentType')!.value }}, {{ byteSize(editForm.get('contractFile')!.value) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ contractFile: null }); editForm.patchValue({ contractFileContentType: null })"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_contractFile"
+              data-cy="contractFile"
+              (change)="setFileData($event, 'contractFile', false)"
+              leapTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="contractFile"
+            id="field_contractFile"
+            data-cy="contractFile"
+            formControlName="contractFile"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="contractFileContentType"
+            id="field_contractFileContentType"
+            formControlName="contractFileContentType"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.salary" for="field_salary">Salary</label>
+          <input type="number" class="form-control" name="salary" id="field_salary" data-cy="salary" formControlName="salary" />
+          <div *ngIf="editForm.get('salary')!.invalid && (editForm.get('salary')!.dirty || editForm.get('salary')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('salary')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('salary')?.errors?.min"
+              leapTranslate="entity.validation.min"
+              [translateValues]="{ min: 1000000 }"
+            >
+              This field should be at least 1000000.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('salary')?.errors?.number"
+              leapTranslate="entity.validation.number"
+            >
+              This field should be a number.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.sex" for="field_sex">Sex</label>
+          <select class="form-control" name="sex" formControlName="sex" id="field_sex" data-cy="sex">
+            <option [ngValue]="null">{{ 'intranetApp.Sex.null' | translate }}</option>
+            <option *ngFor="let sex of sexValues" [value]="sex">{{ 'intranetApp.Sex.' + sex | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('sex')!.invalid && (editForm.get('sex')!.dirty || editForm.get('sex')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('sex')?.errors?.required" leapTranslate="entity.validation.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.dob" for="field_dob">Dob</label>
+          <div class="d-flex">
+            <input
+              id="field_dob"
+              data-cy="dob"
+              type="datetime-local"
+              class="form-control"
+              name="dob"
+              formControlName="dob"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('dob')!.invalid && (editForm.get('dob')!.dirty || editForm.get('dob')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('dob')?.errors?.required" leapTranslate="entity.validation.required">
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('dob')?.errors?.ZonedDateTimelocal"
+              leapTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.placeOfBirth" for="field_placeOfBirth"
+            >Place Of Birth</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="placeOfBirth"
+            id="field_placeOfBirth"
+            data-cy="placeOfBirth"
+            formControlName="placeOfBirth"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.personalPhoneNumber" for="field_personalPhoneNumber"
+            >Personal Phone Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="personalPhoneNumber"
+            id="field_personalPhoneNumber"
+            data-cy="personalPhoneNumber"
+            formControlName="personalPhoneNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('personalPhoneNumber')!.invalid &&
+              (editForm.get('personalPhoneNumber')!.dirty || editForm.get('personalPhoneNumber')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('personalPhoneNumber')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.permanentAddress" for="field_permanentAddress"
+            >Permanent Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="permanentAddress"
+            id="field_permanentAddress"
+            data-cy="permanentAddress"
+            formControlName="permanentAddress"
+          />
+          <div
+            *ngIf="
+              editForm.get('permanentAddress')!.invalid &&
+              (editForm.get('permanentAddress')!.dirty || editForm.get('permanentAddress')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('permanentAddress')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.temporaryAddress" for="field_temporaryAddress"
+            >Temporary Address</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="temporaryAddress"
+            id="field_temporaryAddress"
+            data-cy="temporaryAddress"
+            formControlName="temporaryAddress"
+          />
+          <div
+            *ngIf="
+              editForm.get('temporaryAddress')!.invalid &&
+              (editForm.get('temporaryAddress')!.dirty || editForm.get('temporaryAddress')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('temporaryAddress')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.idNumber" for="field_idNumber">Id Number</label>
+          <input type="text" class="form-control" name="idNumber" id="field_idNumber" data-cy="idNumber" formControlName="idNumber" />
+          <div *ngIf="editForm.get('idNumber')!.invalid && (editForm.get('idNumber')!.dirty || editForm.get('idNumber')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('idNumber')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.idIssuedDate" for="field_idIssuedDate"
+            >Id Issued Date</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_idIssuedDate"
+              data-cy="idIssuedDate"
+              type="datetime-local"
+              class="form-control"
+              name="idIssuedDate"
+              formControlName="idIssuedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="editForm.get('idIssuedDate')!.invalid && (editForm.get('idIssuedDate')!.dirty || editForm.get('idIssuedDate')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('idIssuedDate')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('idIssuedDate')?.errors?.ZonedDateTimelocal"
+              leapTranslate="entity.validation.ZonedDateTimelocal"
+            >
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.idIssuedLocation" for="field_idIssuedLocation"
+            >Id Issued Location</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="idIssuedLocation"
+            id="field_idIssuedLocation"
+            data-cy="idIssuedLocation"
+            formControlName="idIssuedLocation"
+          />
+          <div
+            *ngIf="
+              editForm.get('idIssuedLocation')!.invalid &&
+              (editForm.get('idIssuedLocation')!.dirty || editForm.get('idIssuedLocation')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('idIssuedLocation')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.socialInsuranceNumber" for="field_socialInsuranceNumber"
+            >Social Insurance Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="socialInsuranceNumber"
+            id="field_socialInsuranceNumber"
+            data-cy="socialInsuranceNumber"
+            formControlName="socialInsuranceNumber"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.taxIdentificationNumber" for="field_taxIdentificationNumber"
+            >Tax Identification Number</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="taxIdentificationNumber"
+            id="field_taxIdentificationNumber"
+            data-cy="taxIdentificationNumber"
+            formControlName="taxIdentificationNumber"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.qualification" for="field_qualification"
+            >Qualification</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="qualification"
+            id="field_qualification"
+            data-cy="qualification"
+            formControlName="qualification"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.bankAccount" for="field_bankAccount">Bank Account</label>
+          <input
+            type="text"
+            class="form-control"
+            name="bankAccount"
+            id="field_bankAccount"
+            data-cy="bankAccount"
+            formControlName="bankAccount"
+          />
+          <div *ngIf="editForm.get('bankAccount')!.invalid && (editForm.get('bankAccount')!.dirty || editForm.get('bankAccount')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bankAccount')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.bankCode" for="field_bankCode">Bank Code</label>
+          <input type="text" class="form-control" name="bankCode" id="field_bankCode" data-cy="bankCode" formControlName="bankCode" />
+          <div *ngIf="editForm.get('bankCode')!.invalid && (editForm.get('bankCode')!.dirty || editForm.get('bankCode')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bankCode')?.errors?.required"
+              leapTranslate="entity.validation.required"
+            >
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.userId" for="field_userId">User Id</label>
+          <select class="form-control" id="field_userId" data-cy="userId" name="userId" formControlName="userId">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('userId')!.value?.id ? editForm.get('userId')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.supervisor" for="field_supervisor">Supervisor</label>
+          <select class="form-control" id="field_supervisor" data-cy="supervisor" name="supervisor" formControlName="supervisor">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="employeeOption.id === editForm.get('supervisor')!.value?.id ? editForm.get('supervisor')!.value : employeeOption"
+              *ngFor="let employeeOption of employeesSharedCollection; trackBy: trackEmployeeById"
+            >
+              {{ employeeOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" leapTranslate="intranetApp.employee.job" for="field_job">Job</label>
+          <select class="form-control" id="field_job" data-cy="job" name="job" formControlName="job">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="jobOption.id === editForm.get('job')!.value?.id ? editForm.get('job')!.value : jobOption"
+              *ngFor="let jobOption of jobsSharedCollection; trackBy: trackJobById"
+            >
+              {{ jobOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span leapTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span leapTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

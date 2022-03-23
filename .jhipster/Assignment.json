@@ -1,0 +1,49 @@
+{
+  "name": "Assignment",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "options": {
+        "id": true
+      }
+    },
+    {
+      "fieldName": "startDate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "projectRole",
+      "fieldType": "ProjectRole",
+      "fieldValues": "ENGINEER,ADMIN,MANAGER,DIRECTOR,INTERN",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "project",
+      "otherEntityRelationshipName": "assignment",
+      "relationshipValidateRules": "required",
+      "relationshipName": "project"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "employee",
+      "otherEntityRelationshipName": "assignment",
+      "relationshipValidateRules": "required",
+      "relationshipName": "employee"
+    }
+  ],
+  "entityTableName": "assignment",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": ["intranet"],
+  "changelogDate": "20220127040555"
+}

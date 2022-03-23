@@ -1,0 +1,10 @@
+{
+  "intranetApp": {
+    "Sex": {
+      "null": "",
+      "FEMALE": "FEMALE",
+      "MALE": "MALE",
+      "UNKNOWN": "UNKNOWN"
+    }
+  }
+}

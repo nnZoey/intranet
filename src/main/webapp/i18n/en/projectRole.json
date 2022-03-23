@@ -1,0 +1,12 @@
+{
+  "intranetApp": {
+    "ProjectRole": {
+      "null": "",
+      "ENGINEER": "ENGINEER",
+      "ADMIN": "ADMIN",
+      "MANAGER": "MANAGER",
+      "DIRECTOR": "DIRECTOR",
+      "INTERN": "INTERN"
+    }
+  }
+}

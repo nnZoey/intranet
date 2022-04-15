@@ -26,56 +26,6 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import {
-  NbThemeModule,
-  NbLayoutModule,
-  NbSidebarModule,
-  NbCardModule,
-  NbButtonModule,
-  NbMenuModule,
-  NbSearchModule,
-  NbInputModule,
-  NbAccordionModule,
-  NbTreeGridModule,
-  NbIconModule,
-} from '@nebular/theme';
-
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
-
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatExpansionModule } from '@angular/material/expansion';
-import {TableModule} from 'primeng/table';
-import {ToastModule} from 'primeng/toast';
-import {CalendarModule} from 'primeng/calendar';
-import {SliderModule} from 'primeng/slider';
-import {MultiSelectModule} from 'primeng/multiselect';
-import {ContextMenuModule} from 'primeng/contextmenu';
-import {DialogModule} from 'primeng/dialog';
-import {ButtonModule} from 'primeng/button';
-import {DropdownModule} from 'primeng/dropdown';
-import {ProgressBarModule} from 'primeng/progressbar';
-import {InputTextModule} from 'primeng/inputtext';
-import {FileUploadModule} from 'primeng/fileupload';
-import {ToolbarModule} from 'primeng/toolbar';
-import {RatingModule} from 'primeng/rating';
-import {RadioButtonModule} from 'primeng/radiobutton';
-import {InputNumberModule} from 'primeng/inputnumber';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import {FormsModule} from '@angular/forms';
-
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -88,59 +38,12 @@ import {FormsModule} from '@angular/forms';
     HttpClientModule,
     NgxWebstorageModule.forRoot({ prefix: 'leap', separator: '-', caseSensitive: true }),
     TranslationModule,
-    BrowserAnimationsModule,
-    NoopAnimationsModule,
-    NbThemeModule.forRoot({ name: 'corporate' }),
-    NbLayoutModule,
-    NbEvaIconsModule,
-    NbSidebarModule.forRoot(),
-    NbIconModule,
-    NbCardModule,
-    NbButtonModule,
-    NbMenuModule.forRoot(),
-    NbSearchModule,
-    NbInputModule,
-    NbAccordionModule,
-    NbTreeGridModule,
-    MatDialogModule,
-    MatMenuModule,
-    MatListModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatExpansionModule,
-    TableModule,
-    ToastModule, 
-    CalendarModule,
-    SliderModule,
-    MultiSelectModule,
-    ContextMenuModule,
-    DialogModule,
-    MultiSelectModule,
-		ContextMenuModule,
-		DropdownModule,
-		ButtonModule,
-		ToastModule,
-    InputTextModule,
-    ProgressBarModule,
-    HttpClientModule,
-    FileUploadModule,
-    ToolbarModule,
-    RatingModule,
-    FormsModule,
-    RadioButtonModule,
-    InputNumberModule,
-    ConfirmDialogModule,
-    InputTextareaModule,
   ],
   providers: [
     Title,
     { provide: LOCALE_ID, useValue: 'en' },
     { provide: NgbDateAdapter, useClass: NgbDateDayjsAdapter },
     httpInterceptorProviders,
-    ConfirmationService,
-    MessageService
   ],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],

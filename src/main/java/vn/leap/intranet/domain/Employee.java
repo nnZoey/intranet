@@ -157,13 +157,13 @@ public class Employee implements Serializable {
     @JoinColumn(unique = true)
     private User userId;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "project", "employee" }, allowSetters = true)
-    private Set<Assignment> assignments = new HashSet<>();
+    private Set<Assignment> assignmentEmployees = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "userId", "assignments", "supervisor", "job", "teamMembers" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "userId", "assignmentEmployees", "supervisor", "job", "teamMembers" }, allowSetters = true)
     private Employee supervisor;
 
     @ManyToOne
@@ -171,7 +171,7 @@ public class Employee implements Serializable {
 
     @OneToMany(mappedBy = "supervisor")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "userId", "assignments", "supervisor", "job", "teamMembers" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "userId", "assignmentEmployees", "supervisor", "job", "teamMembers" }, allowSetters = true)
     private Set<Employee> teamMembers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -618,33 +618,33 @@ public class Employee implements Serializable {
         return this;
     }
 
-    public Set<Assignment> getAssignments() {
-        return this.assignments;
+    public Set<Assignment> getAssignmentEmployees() {
+        return this.assignmentEmployees;
     }
 
-    public void setAssignments(Set<Assignment> assignments) {
-        if (this.assignments != null) {
-            this.assignments.forEach(i -> i.setEmployee(null));
+    public void setAssignmentEmployees(Set<Assignment> assignments) {
+        if (this.assignmentEmployees != null) {
+            this.assignmentEmployees.forEach(i -> i.setEmployee(null));
         }
         if (assignments != null) {
             assignments.forEach(i -> i.setEmployee(this));
         }
-        this.assignments = assignments;
+        this.assignmentEmployees = assignments;
     }
 
-    public Employee assignments(Set<Assignment> assignments) {
-        this.setAssignments(assignments);
+    public Employee assignmentEmployees(Set<Assignment> assignments) {
+        this.setAssignmentEmployees(assignments);
         return this;
     }
 
-    public Employee addAssignment(Assignment assignment) {
-        this.assignments.add(assignment);
+    public Employee addAssignmentEmployee(Assignment assignment) {
+        this.assignmentEmployees.add(assignment);
         assignment.setEmployee(this);
         return this;
     }
 
-    public Employee removeAssignment(Assignment assignment) {
-        this.assignments.remove(assignment);
+    public Employee removeAssignmentEmployee(Assignment assignment) {
+        this.assignmentEmployees.remove(assignment);
         assignment.setEmployee(null);
         return this;
     }

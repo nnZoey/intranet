@@ -190,7 +190,7 @@ public class EmployeeResource {
     }
 
     /**
-     * {@code GET  /employees/:id} : get the "id" employee.
+     * {@code GET  /employees/user/:id} : get the "id" employee.
      *
      * @param id the id of the employee to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the employee, or with status {@code 404 (Not Found)}.

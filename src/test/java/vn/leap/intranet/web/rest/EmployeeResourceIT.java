@@ -3173,28 +3173,28 @@ class EmployeeResourceIT {
 
     @Test
     @Transactional
-    void getAllEmployeesByAssignmentIsEqualToSomething() throws Exception {
+    void getAllEmployeesByAssignmentEmployeeIsEqualToSomething() throws Exception {
         // Initialize the database
         employeeRepository.saveAndFlush(employee);
-        Assignment assignment;
+        Assignment assignmentEmployee;
         if (TestUtil.findAll(em, Assignment.class).isEmpty()) {
-            assignment = AssignmentResourceIT.createEntity(em);
-            em.persist(assignment);
+            assignmentEmployee = AssignmentResourceIT.createEntity(em);
+            em.persist(assignmentEmployee);
             em.flush();
         } else {
-            assignment = TestUtil.findAll(em, Assignment.class).get(0);
+            assignmentEmployee = TestUtil.findAll(em, Assignment.class).get(0);
         }
-        em.persist(assignment);
+        em.persist(assignmentEmployee);
         em.flush();
-        employee.addAssignment(assignment);
+        employee.addAssignmentEmployee(assignmentEmployee);
         employeeRepository.saveAndFlush(employee);
-        Long assignmentId = assignment.getId();
+        Long assignmentEmployeeId = assignmentEmployee.getId();
 
-        // Get all the employeeList where assignment equals to assignmentId
-        defaultEmployeeShouldBeFound("assignmentId.equals=" + assignmentId);
+        // Get all the employeeList where assignmentEmployee equals to assignmentEmployeeId
+        defaultEmployeeShouldBeFound("assignmentEmployeeId.equals=" + assignmentEmployeeId);
 
-        // Get all the employeeList where assignment equals to (assignmentId + 1)
-        defaultEmployeeShouldNotBeFound("assignmentId.equals=" + (assignmentId + 1));
+        // Get all the employeeList where assignmentEmployee equals to (assignmentEmployeeId + 1)
+        defaultEmployeeShouldNotBeFound("assignmentEmployeeId.equals=" + (assignmentEmployeeId + 1));
     }
 
     @Test

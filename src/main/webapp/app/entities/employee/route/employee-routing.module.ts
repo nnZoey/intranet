@@ -6,21 +6,12 @@ import { EmployeeComponent } from '../list/employee.component';
 import { EmployeeDetailComponent } from '../detail/employee-detail.component';
 import { EmployeeUpdateComponent } from '../update/employee-update.component';
 import { EmployeeRoutingResolveService } from './employee-routing-resolve.service';
-import { EmployeeShowComponent } from '../show/employeeShow.component';
 
 const employeeRoute: Routes = [
   {
     path: '',
     component: EmployeeComponent,
     canActivate: [UserRouteAccessService],
-  },
-  {
-      path: 'show',
-      component: EmployeeShowComponent,
-      resolve: {
-        employee: EmployeeRoutingResolveService,
-      },
-      canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',

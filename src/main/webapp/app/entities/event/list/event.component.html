@@ -9,7 +9,6 @@
       </button>
 
       <button
-        *leapHasAnyAuthority="'ROLE_ADMIN'"
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-event"
@@ -49,7 +48,7 @@
           <td>{{ event.eventDate | formatMediumDatetime }}</td>
           <td>{{ event.description }}</td>
           <td class="text-right">
-            <div *leapHasAnyAuthority="'ROLE_ADMIN'" class="btn-group">
+            <div class="btn-group">
               <button type="submit" [routerLink]="['/event', event.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" leapTranslate="entity.action.view">View</span>

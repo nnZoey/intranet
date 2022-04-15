@@ -1,0 +1,8 @@
+{
+  "simulation": "computerdatabase.advanced.AdvancedSimulationStep01",
+  "simulationId": "advancedsimulationstep01",
+  "start": 1649925663797,
+  "description": "event",
+  "scenarios": ["Scenario Name"],
+  "assertions": []
+}

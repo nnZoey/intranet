@@ -132,7 +132,7 @@ relationship OneToOne {
 
 relationship OneToMany {
   Project{assignment} to Assignment{project required}
-  Employee{assignment} to Assignment{employee required}
+  Employee{assignmentEmployee} to Assignment{employee required}
 }
 relationship ManyToOne {
   Employee{supervisor} to Employee{teamMembers}

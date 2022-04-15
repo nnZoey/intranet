@@ -49,7 +49,7 @@ public class CacheConfiguration {
             createCache(cm, vn.leap.intranet.domain.Authority.class.getName());
             createCache(cm, vn.leap.intranet.domain.User.class.getName() + ".authorities");
             createCache(cm, vn.leap.intranet.domain.Employee.class.getName());
-            createCache(cm, vn.leap.intranet.domain.Employee.class.getName() + ".assignments");
+            createCache(cm, vn.leap.intranet.domain.Employee.class.getName() + ".assignmentEmployees");
             createCache(cm, vn.leap.intranet.domain.Employee.class.getName() + ".teamMembers");
             createCache(cm, vn.leap.intranet.domain.Job.class.getName());
             createCache(cm, vn.leap.intranet.domain.Project.class.getName());

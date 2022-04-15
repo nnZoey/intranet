@@ -13,7 +13,6 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-project"
         [routerLink]="['/project/new']"
-        *leapHasAnyAuthority="'ROLE_ADMIN'"
       >
         <fa-icon icon="plus"></fa-icon>
         <span leapTranslate="intranetApp.project.home.createLabel"> Create a new Project </span>
@@ -53,9 +52,7 @@
           <td>{{ project.endDate | formatMediumDatetime }}</td>
           <td leapTranslate="{{ 'intranetApp.ProjectStatus.' + project.status }}">{{ project.status }}</td>
           <td class="text-right">
-            <div
-              *leapHasAnyAuthority="'ROLE_ADMIN'"
-              class="btn-group">
+            <div class="btn-group">
               <button
                 type="submit"
                 [routerLink]="['/project', project.id, 'view']"

@@ -121,7 +121,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
 
     private LongFilter userIdId;
 
-    private LongFilter assignmentId;
+    private LongFilter assignmentEmployeeId;
 
     private LongFilter supervisorId;
 
@@ -164,7 +164,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
         this.bankAccount = other.bankAccount == null ? null : other.bankAccount.copy();
         this.bankCode = other.bankCode == null ? null : other.bankCode.copy();
         this.userIdId = other.userIdId == null ? null : other.userIdId.copy();
-        this.assignmentId = other.assignmentId == null ? null : other.assignmentId.copy();
+        this.assignmentEmployeeId = other.assignmentEmployeeId == null ? null : other.assignmentEmployeeId.copy();
         this.supervisorId = other.supervisorId == null ? null : other.supervisorId.copy();
         this.jobId = other.jobId == null ? null : other.jobId.copy();
         this.teamMembersId = other.teamMembersId == null ? null : other.teamMembersId.copy();
@@ -626,19 +626,19 @@ public class EmployeeCriteria implements Serializable, Criteria {
         this.userIdId = userIdId;
     }
 
-    public LongFilter getAssignmentId() {
-        return assignmentId;
+    public LongFilter getAssignmentEmployeeId() {
+        return assignmentEmployeeId;
     }
 
-    public LongFilter assignmentId() {
-        if (assignmentId == null) {
-            assignmentId = new LongFilter();
+    public LongFilter assignmentEmployeeId() {
+        if (assignmentEmployeeId == null) {
+            assignmentEmployeeId = new LongFilter();
         }
-        return assignmentId;
+        return assignmentEmployeeId;
     }
 
-    public void setAssignmentId(LongFilter assignmentId) {
-        this.assignmentId = assignmentId;
+    public void setAssignmentEmployeeId(LongFilter assignmentEmployeeId) {
+        this.assignmentEmployeeId = assignmentEmployeeId;
     }
 
     public LongFilter getSupervisorId() {
@@ -734,7 +734,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             Objects.equals(bankAccount, that.bankAccount) &&
             Objects.equals(bankCode, that.bankCode) &&
             Objects.equals(userIdId, that.userIdId) &&
-            Objects.equals(assignmentId, that.assignmentId) &&
+            Objects.equals(assignmentEmployeeId, that.assignmentEmployeeId) &&
             Objects.equals(supervisorId, that.supervisorId) &&
             Objects.equals(jobId, that.jobId) &&
             Objects.equals(teamMembersId, that.teamMembersId) &&
@@ -775,7 +775,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             bankAccount,
             bankCode,
             userIdId,
-            assignmentId,
+            assignmentEmployeeId,
             supervisorId,
             jobId,
             teamMembersId,
@@ -817,7 +817,7 @@ public class EmployeeCriteria implements Serializable, Criteria {
             (bankAccount != null ? "bankAccount=" + bankAccount + ", " : "") +
             (bankCode != null ? "bankCode=" + bankCode + ", " : "") +
             (userIdId != null ? "userIdId=" + userIdId + ", " : "") +
-            (assignmentId != null ? "assignmentId=" + assignmentId + ", " : "") +
+            (assignmentEmployeeId != null ? "assignmentEmployeeId=" + assignmentEmployeeId + ", " : "") +
             (supervisorId != null ? "supervisorId=" + supervisorId + ", " : "") +
             (jobId != null ? "jobId=" + jobId + ", " : "") +
             (teamMembersId != null ? "teamMembersId=" + teamMembersId + ", " : "") +

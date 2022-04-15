@@ -49,7 +49,7 @@
       "bankAccount": "Bank Account",
       "bankCode": "Bank Code",
       "userId": "User Id",
-      "assignment": "Assignment",
+      "assignmentEmployee": "Assignment Employee",
       "supervisor": "Supervisor",
       "job": "Job",
       "teamMembers": "Team Members"

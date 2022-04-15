@@ -45,12 +45,6 @@ export class EmployeeService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
-  findByUserId(id: number): Observable<EntityResponseType> {
-    return this.http
-      .get<IEmployee>(`${this.resourceUrl}/user/${id}`, { observe: 'response' })
-      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
-  }
-
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http

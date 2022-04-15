@@ -170,7 +170,7 @@
       "relationshipType": "one-to-many",
       "otherEntityName": "assignment",
       "otherEntityRelationshipName": "employee",
-      "relationshipName": "assignment"
+      "relationshipName": "assignmentEmployee"
     },
     {
       "relationshipType": "many-to-one",

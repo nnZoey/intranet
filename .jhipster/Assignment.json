@@ -31,7 +31,7 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "employee",
-      "otherEntityRelationshipName": "assignment",
+      "otherEntityRelationshipName": "assignmentEmployee",
       "relationshipValidateRules": "required",
       "relationshipName": "employee"
     }

@@ -9,24 +9,10 @@ import { EmployeeService } from '../service/employee.service';
 import { EmployeeDeleteDialogComponent } from '../delete/employee-delete-dialog.component';
 import { DataUtils } from 'app/core/util/data-util.service';
 import { ParseLinks } from 'app/core/util/parse-links.service';
-import { AccountService } from 'app/core/auth/account.service';
-import { ActivatedRoute } from '@angular/router';
-import { NbSearchService } from '@nebular/theme';
-import { ConfirmationService } from 'primeng/api';
-import { MessageService } from 'primeng/api';
-
 
 @Component({
   selector: 'leap-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss'],
-  styles: [`
-        :host ::ng-deep .p-dialog .product-image {
-            width: 150px;
-            margin: 0 auto 2rem auto;
-            display: block;
-        }
-    `],
 })
 export class EmployeeComponent implements OnInit {
   employees: IEmployee[];
@@ -36,26 +22,14 @@ export class EmployeeComponent implements OnInit {
   page: number;
   predicate: string;
   ascending: boolean;
-  employeeDialog: boolean | undefined;
-  employeeUserId: IEmployee | null = null;
-  value = '';
-  selectedProducts: IEmployee[] | null = null;
-
-  submitted: boolean | undefined;
 
   constructor(
-    protected activatedRoute: ActivatedRoute,
-    protected accountService: AccountService,
     protected employeeService: EmployeeService,
     protected dataUtils: DataUtils,
     protected modalService: NgbModal,
-    protected parseLinks: ParseLinks,
-    private searchService: NbSearchService,
-    private messageService: MessageService, 
-    private confirmationService: ConfirmationService,
+    protected parseLinks: ParseLinks
   ) {
     this.employees = [];
-    this.employeeUserId = {};
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.page = 0;
     this.links = {
@@ -63,94 +37,12 @@ export class EmployeeComponent implements OnInit {
     };
     this.predicate = 'id';
     this.ascending = true;
-    this.searchService.onSearchSubmit()
-      .subscribe((data: any) => {
-        this.value = data.term;
-      })
-  }
-
-  
-  editProduct(employee: IEmployee): void {
-    this.employeeUserId = {...employee};
-    this.employeeDialog = true;
-  }
-
-  openNew(): void {
-    this.employeeUserId = {};
-    this.submitted = false;
-    this.employeeDialog = true;
-}
-
-  deleteSelectedProducts(): void {
-    this.confirmationService.confirm({
-        message: 'Are you sure you want to delete the selected products?',
-        header: 'Confirm',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            this.employees = this.employees.filter(val => !this.selectedProducts?.includes(val));
-            this.selectedProducts = null;
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
-        }
-    });
-  }
-
-  deleteProduct(employee: IEmployee): void {
-    this.confirmationService.confirm({
-        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-        message: 'Are you sure you want to delete ' + employee.firstName + '?',
-        header: 'Confirm',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => {
-            this.employees = this.employees.filter((val: any) => val.id !== employee.id);
-            this.employeeUserId = {};
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-        }
-    });
-  }
-
-  hideDialog(): void {
-    this.employeeDialog = false;
-    this.submitted = false;
-  }
-
-  findIndexById(id: number): number {
-    let index = -1;
-    for (let i = 0; i < this.employees.length; i++) {
-        if (this.employees[i].id === id) {
-            index = i;
-            break;
-        }
-    }
-
-    return index;
   }
 
   loadAll(): void {
     this.isLoading = true;
-    this.accountService.getAuthenticationState().subscribe(account => {
-      
-      if (account) {
-        
 
-        this.employeeService.findByUserId(account.id)
-        .subscribe({
-          next: (res: HttpResponse<IEmployee>) => {
-            console.warn(res);
-            
-            this.paginateEmployee(res.body, res.headers);
-          
-          },
-          error: () => {
-            this.isLoading = false;
-          },
-    
-        })
-      }
-    
-    });
-  
-      
-      this.employeeService
+    this.employeeService
       .query({
         page: this.page,
         size: this.itemsPerPage,
@@ -167,10 +59,6 @@ export class EmployeeComponent implements OnInit {
       });
   }
 
-  previousState(): void {
-    window.history.back();
-  }
-
   reset(): void {
     this.page = 0;
     this.employees = [];
@@ -183,7 +71,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.loadAll();
+    this.loadAll();
   }
 
   trackId(index: number, item: IEmployee): number {
@@ -195,7 +83,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   openFile(base64String: string, contentType: string | null | undefined): void {
-    this.dataUtils.openFile(base64String, contentType);
+    return this.dataUtils.openFile(base64String, contentType);
   }
 
   delete(employee: IEmployee): void {
@@ -205,7 +93,6 @@ export class EmployeeComponent implements OnInit {
     modalRef.closed.subscribe(reason => {
       if (reason === 'deleted') {
         this.reset();
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
       }
     });
   }
@@ -233,19 +120,4 @@ export class EmployeeComponent implements OnInit {
       }
     }
   }
-
-  protected paginateEmployee(data: IEmployee | null, headers: HttpHeaders): void {
-    const linkHeader = headers.get('link');
-    if (linkHeader) {
-      this.links = this.parseLinks.parse(linkHeader);
-    } else {
-      this.links = {
-        last: 0,
-      };
-    }
-    if (data) {
-        this.employeeUserId = data;
-      }
-    }
-  }
-
+}

@@ -47,7 +47,7 @@ public class Project implements Serializable {
     @Column(name = "status", nullable = false)
     private ProjectStatus status;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "project", "employee" }, allowSetters = true)
     private Set<Assignment> assignments = new HashSet<>();

@@ -13,12 +13,3 @@ services:
     # remove the "127.0.0.1:" prefix
     ports:
       - 127.0.0.1:5432:5432
-
-  pgadmin:
-    image: dpage/pgadmin4
-    ports:
-        - "5050:5050"
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=nguyentramzoey@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=123456
-      - PGADMIN_LISTEN_PORT=5050

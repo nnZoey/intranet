@@ -306,6 +306,12 @@
             <artifactId>postgresql</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>io.gatling.highcharts</groupId>
+            <artifactId>gatling-charts-highcharts</artifactId>
+            <version>3.5.0</version>
+            <scope>test</scope>
+        </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
     </dependencies>
 
@@ -371,6 +377,16 @@
             <plugin>
                 <groupId>org.gaul</groupId>
                 <artifactId>modernizer-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>io.gatling:gatling-maven-plugin</groupId>
+                <artifactId>gatling-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <runMultipleSimulations>true</runMultipleSimulations>
+                    <resourcesFolder>${project.basedir}/src/test/gatling/conf</resourcesFolder>
+                    <simulationsFolder>${project.basedir}/src/test/gatling/user-files/simulations</simulationsFolder>
+                </configuration>
             </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>

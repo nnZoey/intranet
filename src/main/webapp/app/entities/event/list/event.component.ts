@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { ASC, DESC, ITEMS_PER_PAGE } from 'app/config/pagination.constants';
+
 import { IEvent } from '../event.model';
 import { EventService } from '../service/event.service';
 import { EventDeleteDialogComponent } from '../delete/event-delete-dialog.component';
@@ -13,6 +15,8 @@ import { EventDeleteDialogComponent } from '../delete/event-delete-dialog.compon
 export class EventComponent implements OnInit {
   events?: IEvent[];
   isLoading = false;
+  predicate: string | null = null;
+  ascending = true;
 
   constructor(protected eventService: EventService, protected modalService: NgbModal) {}
 

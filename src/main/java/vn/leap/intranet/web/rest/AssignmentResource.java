@@ -179,6 +179,13 @@ public class AssignmentResource {
         return ResponseUtil.wrapOrNotFound(assignment);
     }
 
+    @GetMapping("/assignments/user/{id}")
+    public ResponseEntity<List<Assignment>> getUserAssignmentById(@PathVariable Long id) {
+        log.debug("REST request to get Assignment : {}", id);
+        List<Assignment> assignment = assignmentRepository.findUserAssignmentsById(id);
+        return ResponseEntity.ok().body(assignment);
+    }
+
     /**
      * {@code DELETE  /assignments/:id} : delete the "id" assignment.
      *

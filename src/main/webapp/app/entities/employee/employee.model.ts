@@ -6,7 +6,6 @@ import { ContractType } from 'app/entities/enumerations/contract-type.model';
 import { Sex } from 'app/entities/enumerations/sex.model';
 
 export interface IEmployee {
-
   id?: number;
   employeeCode?: string;
   firstName?: string;
@@ -41,7 +40,7 @@ export interface IEmployee {
   bankAccount?: string;
   bankCode?: string;
   userId?: IUser | null;
-  assignments?: IAssignment[] | null;
+  assignmentEmployees?: IAssignment[] | null;
   supervisor?: IEmployee | null;
   job?: IJob | null;
   teamMembers?: IEmployee[] | null;
@@ -83,7 +82,7 @@ export class Employee implements IEmployee {
     public bankAccount?: string,
     public bankCode?: string,
     public userId?: IUser | null,
-    public assignments?: IAssignment[] | null,
+    public assignmentEmployees?: IAssignment[] | null,
     public supervisor?: IEmployee | null,
     public job?: IJob | null,
     public teamMembers?: IEmployee[] | null

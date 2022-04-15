@@ -149,6 +149,19 @@ public class EventResource {
     }
 
     /**
+     * {@code GET  /events} : get all the events.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of events in body.
+     */
+    @GetMapping("/events/sorted")
+    public ResponseEntity<List<Event>> getAllEventsSort(EventCriteria criteria) {
+        log.debug("REST request to get Events by criteria: {}", criteria);
+        List<Event> entityList = eventRepository.findAllByEventDateSort();
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
      * {@code GET  /events/count} : count all the events.
      *
      * @param criteria the criteria which the requested entities should match.

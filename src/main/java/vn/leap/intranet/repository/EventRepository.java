@@ -11,6 +11,6 @@ import vn.leap.intranet.domain.Event;
 @SuppressWarnings("unused")
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
-    @Query("Select e from Event e order by e.eventDate ASC")
+    @Query("Select e from Event e order by e.eventDate DESC")
     List<Event> findAllByEventDateSort();
 }
